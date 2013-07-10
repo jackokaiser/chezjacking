@@ -27,7 +27,7 @@ var cheerio = require('cheerio');
 var rest = require('restler');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
-var URL_DEFAULT = "http://murmuring-dawn-2416.herokuapp.com/index.html";
+var URL_DEFAULT = "http://murmuring-dawn-2416.herokuapp.com/";
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -47,7 +47,8 @@ var loadChecks = function(checksfile) {
 };
 
 var checkHtmlFile = function(htmlfile, checksfile) {
-    $ = cheerioHtmlFile(htmlfile);
+    // $ = cheerioHtmlFile(htmlfile);
+    $ = cheerio.load(htmlfile);
     var checks = loadChecks(checksfile).sort();
     var out = {};
     for(var ii in checks) {
@@ -64,7 +65,7 @@ var clone = function(fn) {
 };
 
 
-var buildfn = function(toCheck) 
+var buildfn = function(toCheck)
 {
     return (function (result,response)
             {
@@ -77,16 +78,15 @@ var buildfn = function(toCheck)
                 }
             });
 };
- 
+
 if(require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
-        .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
-        .option('-u --url <url_path>', 'Path to url', null ,URL_DEFAULT)
+        .option('-u --url <url>', 'Path to url', String ,URL_DEFAULT)
         .parse(process.argv);
 
     var callback = buildfn(program.checks);
-    rest.get(program.url.toString()).on('complete', callback);
+    rest.get(program.url).on('complete', callback);
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
