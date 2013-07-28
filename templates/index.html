@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chez Jacking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css">
+    <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css">    
+    <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js"></script>
+    <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800" 
+          rel="stylesheet" type="text/css">
+    <style type="text/css">
+      
+      /* Large desktop */
+      @media (min-width: 980px) { 
+          body {
+              padding-top: 60px;
+          }
+          .linediv-l {
+              border-right: 1px white solid;
+          }
+          .linediv-r {
+              border-left: 1px white solid;
+          }
+      }
+      
+      /* Landscape phones and down */
+      @media (max-width: 480px) { 
+          .copy {
+              padding: 2.5% 10%;
+          }
+          .linediv-l {
+              border-bottom: 1px white solid;
+          }
+          .linediv-r {
+              border-top: 1px white solid;
+          }
+      }
+      
+      /* All form factors */
+      
+      /* Main body and headings */
+      body{
+          font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+          background-color : #ded1a0; 
+      }
+      .heading, .subheading {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+          text-align: center;
+      }
+      p.lead {
+          padding-top: 1.5%;
+          font-size: 24px;
+          line-height: 30px;
+      }
+      p {
+          font-size: 18px;
+          line-height: 24px;
+      }
+      
+      /* Video pitch and Action */
+      .pitch {
+          padding: 2.5% 0%;
+      }
+      .order {
+          padding: 2% 0%;
+      }
+      .actions {
+          background-color: #343434;
+          padding: 3% 0%;
+      }
+      .video, .thermometer, .order, .social, .statistics {
+          text-align: center;
+      }
+      .statistics h3, .statistics p {
+          color: white;
+      }
+      
+      /* Marketing Copy and Footer */
+      .copy {
+          padding-top: 2.5%;
+          padding-bottom: 2.5%;
+          text-align: justify;
+      }
+      .item-desc {
+      /* top : 50%; */
+      /* line-height : 150%; */
+      /* border-radius:20px; */
+      /* padding-top: 120px; */
+      /* background-color: #91d4c4; */
+      /* background-color: #e2d6a8; */
+      }
+      .spacer12{
+          padding: 4% 0%;
+      }      
+      .perspective:after {
+          display:none;
+      }
+      .asset {
+          padding: 2.5% 0%;
+      }
+      .footer {
+          color: #cccccc;
+          text-align: center;
+      }
+      .footer p {
+          font-size: 11px;
+      }
+      .footer a {
+          color: #ccccff;
+      }
+      
+      /* SHADOWS! */
+      /* Shared styles */
+      
+      .drop-shadow {
+          border-radius : 10px;
+          position:relative;
+          float:left;
+          width:40%;
+          padding:1em;
+          margin:2em 10px 4em;
+          background:#fff;
+          -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+          -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+          box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+      }
+      
+      .drop-shadow:before,
+      .drop-shadow:after {
+          content:"";
+          position:absolute;
+          z-index:-2;
+      }
+      
+      .drop-shadow p {
+          font-size:16px;
+          font-weight:bold;
+      }
+      
+      /* Lifted corners */
+      
+      .lifted {
+          -moz-border-radius:4px;
+          border-radius:4px;
+      }
+      
+      .lifted:before,
+      .lifted:after {
+          bottom:15px;
+          left:10px;
+          width:50%;
+          height:20%;
+          max-width:300px;
+          max-height:100px;
+          -webkit-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+          -moz-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+          box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+          -webkit-transform:rotate(-3deg);
+          -moz-transform:rotate(-3deg);
+          -ms-transform:rotate(-3deg);
+          -o-transform:rotate(-3deg);
+          transform:rotate(-3deg);
+      }
+      
+      .lifted:after {
+          right:10px;
+          left:auto;
+          -webkit-transform:rotate(3deg);
+          -moz-transform:rotate(3deg);
+          -ms-transform:rotate(3deg);
+          -o-transform:rotate(3deg);
+          transform:rotate(3deg);
+      }
+      
+      /* Curled corners */
+      
+      .curled {
+          border:1px solid #efefef;
+          -moz-border-radius:0 0 120px 120px / 0 0 6px 6px;
+          border-radius:0 0 120px 120px / 0 0 6px 6px;
+      }
+      
+      .curled:before,
+      .curled:after {
+          bottom:12px;
+          left:10px;
+          width:50%;
+          height:55%;
+          max-width:200px;
+          max-height:100px;
+          -webkit-box-shadow:0 8px 12px rgba(0, 0, 0, 0.5);
+          -moz-box-shadow:0 8px 12px rgba(0, 0, 0, 0.5);
+          box-shadow:0 8px 12px rgba(0, 0, 0, 0.5);
+          -webkit-transform:skew(-8deg) rotate(-3deg);
+          -moz-transform:skew(-8deg) rotate(-3deg);
+          -ms-transform:skew(-8deg) rotate(-3deg);
+          -o-transform:skew(-8deg) rotate(-3deg);
+          transform:skew(-8deg) rotate(-3deg);
+      }
+      
+      .curled:after {
+          right:10px;
+          left:auto;
+          -webkit-transform:skew(8deg) rotate(3deg);
+          -moz-transform:skew(8deg) rotate(3deg);
+          -ms-transform:skew(8deg) rotate(3deg);
+          -o-transform:skew(8deg) rotate(3deg);
+          transform:skew(8deg) rotate(3deg);
+      }
+      
+      /* Perspective */
+      
+      .perspective:before {
+          left:80px;
+          bottom:5px;
+          width:50%;
+          height:35%;
+          max-width:200px;
+          max-height:50px;
+          -webkit-box-shadow:-80px 0 8px rgba(0, 0, 0, 0.4);
+          -moz-box-shadow:-80px 0 8px rgba(0, 0, 0, 0.4);
+          box-shadow:-80px 0 8px rgba(0, 0, 0, 0.4);
+          -webkit-transform:skew(50deg);
+          -moz-transform:skew(50deg);
+          -ms-transform:skew(50deg);
+          -o-transform:skew(50deg);
+          transform:skew(50deg);
+          -webkit-transform-origin:0 100%;
+          -moz-transform-origin:0 100%;
+          -ms-transform-origin:0 100%;
+          -o-transform-origin:0 100%;
+          transform-origin:0 100%;
+      }
+      
+      .perspective:after {
+          display:none;
+      }
+      
+      /* Raised shadow - no pseudo-elements needed */
+      
+      .raised {
+          -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+          -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+          box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+      }
+      
+      /* Curved shadows */
+      
+      .curved:before {
+          top:10px;
+          bottom:10px;
+          left:0;
+          right:50%;
+          -webkit-box-shadow:0 0 15px rgba(0,0,0,0.6);
+          -moz-box-shadow:0 0 15px rgba(0,0,0,0.6);
+          box-shadow:0 0 15px rgba(0,0,0,0.6);
+          -moz-border-radius:10px / 100px;
+          border-radius:10px / 100px;
+      }
+      
+      .curved-vt-2:before {
+          right:0;
+      }
+      
+      .curved-hz-1:before {
+          top:50%;
+          bottom:0;
+          left:10px;
+          right:10px;
+          -moz-border-radius:100px / 10px;
+          border-radius:100px / 10px;
+      }
+      
+      .curved-hz-2:before {
+          top:0;
+          bottom:0;
+          left:10px;
+          right:10px;
+          -moz-border-radius:100px / 10px;
+          border-radius:100px / 10px;
+      }
+      
+      /* Rotated box */
+      
+      .rotated {
+          -webkit-box-shadow:none;
+          -moz-box-shadow:none;
+          box-shadow:none;
+          -webkit-transform:rotate(-3deg);
+          -moz-transform:rotate(-3deg);
+          -ms-transform:rotate(-3deg);
+          -o-transform:rotate(-3deg);
+          transform:rotate(-3deg);
+      }
+      
+      .rotated > :first-child:before {
+          content:"";
+          position:absolute;
+          z-index:-1;
+          top:0;
+          bottom:0;
+          left:0;
+          right:0;
+          background:#fff;
+          -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+          -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+          box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+      }
+      
+      
+    </style>
+  </head>
+  <body>
+    
+    <!-- Mobile-friendly navbar adapted from example. -->
+    <!-- http://twitter.github.io/bootstrap/examples/starter-template.html -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar"
+                  data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Bitstarter</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- We use row-fluid inside containers to achieve a resizable layout. -->
+    <!-- blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/ -->
+    <!-- http://stackoverflow.com/a/12270322 -->
+    <div class="container">
+      <!-- Font and paired font of .heading/.subheading and body from Google Fonts -->
+      <!-- www.google.com/fonts/specimen/Ubuntu -->
+      <!-- www.google.com/fonts/specimen/Ubuntu#pairings -->
+      <div class="row-fluid heading">
+        <div class="span12">
+          <h1>Jacques KAISER</h1>
+        </div>
+      </div> 
+      <div class="row-fluid subheading">
+        <div class="span12">
+          <!-- Special typography from Bootstrap for lead paragraph. -->
+          <!-- http://twitter.github.io/bootstrap/base-css.html#typography -->
+          <p class="lead">Welcome to my personal website</p>
+        </div>
+      </div>
+      <!-- Beyond this part the marketing copy begins. -->
+      <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/text-align -->
+      <!-- http://twitter.github.io/bootstrap/base-css.html#images -->
+      <!-- http://placehold.it -->
+      <div class="row-fluid section1">
+        <div class="span5 offset1 asset">
+          <img class="img-polaroid" src="http://placehold.it/480x300">
+        </div>
+        <div class="span5 copy drop-shadow perspective">
+          <p>
+            First of all, you should glance around my web projects. 
+            Each of them tend to run from within the browser, though
+            you'd need up-to-date GPU drivers and WebGL support.
+          </p>
+        </div>
+      </div>
+      
+      <div class="row-fluid section2">
+        <div class="span5 offset1 copy drop-shadow perspective">
+          <p>
+            If you enjoyed the experience and want to know more about me,
+            browse my about page. As I'm quite of a traveller, 
+            I'll try to keep my localisation up to date.
+          </p>
+        </div>
+        <div class="span5 asset">
+          <img class="img-polaroid" src="http://placehold.it/480x300">
+        </div>
+        
+        
+      </div>
+      
+      <div class="row-fluid section3">
+        <div class="span5 offset1 asset">
+          <img class="img-polaroid" src="http://placehold.it/480x300">
+        </div>
+        <div class="span5 copy drop-shadow perspective">
+          <p>
+            Job recruiter or hacker,
+            do not hesitate to get in touch with me:
+            you'll find all the required informations in the contact page.
+          </p>
+        </div>
+      </div>
+      
+      
+      
+      <!-- <\!-- Not crucial, but we put this under a CC By-SA 3.0 license. -\-> -->
+      <!-- <\!-- http://creativecommons.org/licenses/ -\-> -->
+      <!-- <div class="row-fluid footer"> -->
+      <!--   <div class="span12"> -->
+      <!--     <p>This work is licensed under -->
+      <!--       the <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC -->
+      <!--         By-SA 3.0 -->
+      <!--       </a>, without all the cruft that would otherwise be -->
+      <!--       put at the bottom of the page.</p> -->
+      <!--   </div> -->
+      <!-- </div> -->
+    </div>
+  </body>
+</html>

@@ -7,7 +7,7 @@ app.use(express.logger());
 
 app.get('/', function(request, response) {
 
-    var buffer=fs.readFileSync("index.html");
+    var buffer=fs.readFileSync("templates/index.html");
 
     response.send(buffer.toString());
 });
