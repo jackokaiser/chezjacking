@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<address>
+   <p>Vous pouvez me contacter à cette adresse :</p>
+   <p><strong>Tigrou Alfred</strong><br>
+     Allée des fauves<br>
+     28645 Félins-sur-Loire<br>
+</address>
+
+{% endblock %}
