@@ -1,1 +1,1 @@
-web: coffee web.coffe
+web: coffee web.coffee
