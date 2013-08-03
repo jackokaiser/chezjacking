@@ -1,5 +1,5 @@
 /* Large desktop */
-@media (min-width: 980px) { 
+@media (min-width: 980px) {
     body {
         padding-top: 60px;
     }
@@ -12,7 +12,7 @@
 }
 
 /* Landscape phones and down */
-@media (max-width: 480px) { 
+@media (max-width: 480px) {
     .copy {
         padding: 2.5% 10%;
     }
@@ -29,7 +29,7 @@
 /* Main body and headings */
 body{
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-    background-color : #ded1a0; 
+    background-color : #ded1a0;
 }
 .heading, .subheading {
     font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
@@ -45,6 +45,12 @@ p {
     line-height: 24px;
 }
 
+.centered {
+    text-align : center;
+}
+strong {
+    font-size: 22px;
+}
 /* Video pitch and Action */
 .pitch {
     padding: 2.5% 0%;
@@ -79,7 +85,7 @@ p {
 }
 .spacer12{
     padding: 4% 0%;
-}      
+}
 .perspective:after {
     display:none;
 }
@@ -300,4 +306,3 @@ table {
     /* background-color : #e3d7a8; */
     background-color : #91d4c4 ;
 }
-

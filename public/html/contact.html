@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css">
-    <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css">    
+    <link rel="stylesheet" href="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css">
     <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js"></script>
     <script src="https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800" 
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800"
           rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/base.css">
   </head>
   <body>
-    
+
     <!-- Mobile-friendly navbar adapted from example. -->
     <!-- http://twitter.github.io/bootstrap/examples/starter-template.html -->
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -50,7 +50,7 @@
         <div class="span12">
           <h1>Contact</h1>
         </div>
-      </div> 
+      </div>
       <div class="row-fluid subheading">
         <div class="span12">
           <!-- Special typography from Bootstrap for lead paragraph. -->
@@ -63,28 +63,49 @@
       <!-- http://twitter.github.io/bootstrap/base-css.html#images -->
       <!-- http://placehold.it -->
       <div class="span6">
-        <div class="span4 well drop-shadow perspective">
-	      <div class="row">
-		    <div class="span1"><a href="/" class="thumbnail"><img src="img/gravatar.jpg" alt=""></a></div>
-		    <div class="span3">
-			  <p>Developper</p>
-          	  <p><strong>Jacques KAISER</strong></p>
-			  <span class=" badge badge-warning">8 messages</span> <span class=" badge badge-info">15 followers</span>
-		    </div>
-	      </div>
+        <div class="span4 well drop-shadow lifted">
+          <div class="row">
+            <div class="span1"><a href="/" class="thumbnail"><img src="img/gravatar.jpg" alt=""></a></div>
+            <div class="span3">
+              <p>Developper</p>
+              <p><strong>Jacques KAISER</strong></p>
+              <p>jacko.kaiser@gmail.com</p>
+              <div class="span3">
+                <a class="social" href="http://www.linkedin.com/profile/view?id=97265989&locale=en_US"><img src="img/linkedin.png" width="35" alt="linkedin"></a>
+                <a class="social" href="https://plus.google.com/105897447355921804637"><img src="img/googleplus.jpg" width="35" alt="googleplus"></a>
+                <a class="social" href="https://github.com/jackokaiser"><img src="img/github.png" width="35" alt="github"></a>
+              </div>
+            </div>
+
+
+            <!-- links: -->
+            <!-- linkedin, google plus, facebook? -->
+
+          </div>
         </div>
       </div>
-      
-      <div class="span6">
+
+      <div class="row-fluid">
+
+        <div class="span5 drop-shadow lifted">
+          <div class="centered"><p><strong>Location</strong></p></div>
+          <div class="copy"><p>From now, and until the 16th of October 2013, I'm leaving in Strasbourg, France.</p></div>
+          <span class="copy"><p>After this date, I'll spend one year in Australia, starting with 6 months in Melbourne.</p></span>
+          <div class="offset2">
+          </div>
+        </div>
+      </div>
+
+      <div class="span6 drop-shadow raised">
         <form>
           <div class="controls controls-row">
-            <input id="name" name="name" type="text" class="span3" placeholder="Name"> 
+            <input id="name" name="name" type="text" class="span3" placeholder="Name">
             <input id="email" name="email" type="email" class="span3" placeholder="Email address">
           </div>
           <div class="controls">
             <textarea id="message" name="message" class="span6" placeholder="Your Message" rows="5"></textarea>
           </div>
-          
+
           <div class="controls">
             <button id="contact-submit" type="submit" class="btn btn-primary input-medium pull-right">Send</button>
           </div>
