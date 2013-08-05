@@ -16,14 +16,14 @@ publicFiles = [
 
 simpleRender = (request, response) ->
         pathname = (url.parse request.url).pathname
-        buffer = fs.readFileSync "public/html"+pathname+".html"
+        buffer = fs.readFileSync "html"+pathname+".html"
         # buffer = fs.readFileSync "public/html/index.html"
         response.send buffer.toString()
         # response.render("public/html/" + pathname + ".html");
 
 
 app.get '/' , (request,response) ->
-        buffer=fs.readFileSync "public/html/home.html"
+        buffer=fs.readFileSync "html/home.html"
         response.send buffer.toString()
 
 
