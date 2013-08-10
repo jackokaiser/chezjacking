@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+   <title>three.js webgl - render-to-texture</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+   <style>
+   body {
+ color: #ffffff;
+ font-family:Monospace;
+ font-size:13px;
+ text-align:center;
+ font-weight: bold;
+ background-color: #000000;
+ margin: 0px;
+ overflow: hidden;
+ }
+
+#info {
+position: absolute;
+top: 0px; width: 100%;
+padding: 5px;
+}
+
+a {
+ color: #ffffff;
+}
+
+</style>
+</head>
+
+
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+  <div id="container"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script src="js/libs/three.min.js"></script>
+  <script src="js/libs/stats.min.js"></script>
+  <!-- <script src="js/libs/Detector.js"></script> -->
+
+  <!-- Shaders -->
+  <script type="x-shader/x-vertex" id="dvertexshader">
+  varying vec3 vColor;
+
+void main(void)
+{
+  vColor=vec3(vec2(position),1.);
+  gl_Position = vec4 (position,1.);
+}
+</script>
+<script type="x-shader/x-vertex" id="dfragmentshader">
+
+  varying vec3 vColor;
+
+void main(void)
+{
+  gl_FragColor = vec4(vColor,1.);
+}
+</script>
+<script type="x-shader/x-vertex" id="vertexshader">
+  varying vec2 vTexCoord;
+
+void main(void) {
+  vTexCoord = vec2(position);
+  gl_Position = vec4(position, 1.0);
+}
+</script>
+<script type="x-shader/x-fragment" id="fragmentPostProcess">
+  varying vec2 vTexCoord;
+uniform sampler2D uTex;
+
+void main ()
+{
+  gl_FragColor = texture2D(uTex,(vTexCoord/2.+vec2(0.5,0.5)));
+}
+
+</script>
+<script type="x-shader/x-fragment" id="fragmentRayTracer">
+
+#define SPHERE 0
+#define CONE 1
+
+#define NUMBER_OF_SPHERES 5
+#define NUMBER_OF_CONES 5
+
+  varying vec2 vTexCoord;
+
+uniform float uTime;
+uniform vec2 uInverseTextureSize;
+
+
+struct Cone {
+  vec3 v;
+  vec3 axis;
+  float theta;
+  float ctheta;
+  float inf;
+  float sup;
+} ;
+
+
+struct Ray {
+  vec3 origin;
+  vec3 direction;
+} ;
+
+struct IntersectItem {
+  bool isInter;
+  int itemType;
+  float dist;
+  vec3 p;
+  vec3 normalVector;
+  vec3 color;
+};
+
+
+
+vec3 lightDir = normalize( vec3(0.01, -0.02, 0.5) );
+vec3 eyePos = vec3(0., 0., 4.0);
+vec3 bgColor = vec3(0.2, 0.2, 0.2);
+
+vec3 ambient = vec3(0.05, 0.1, 0.1);
+
+vec4 sphereItems [NUMBER_OF_SPHERES];
+Cone coneItems [NUMBER_OF_CONES];
+
+vec3 sphereColor = vec3(0.9, 0.8, 0.6);
+vec3 coneColor = vec3(0.9, 0., 0.);
+
+float maxDist = 1024.0;
+
+
+/* normal vector of a cone at given point */
+vec3 coneNorm( vec3 pt, Cone c )
+{
+  vec3 VP=normalize(pt-c.v);
+  vec3 VPcA=cross(VP,c.axis);
+  return cross(VPcA,VP);
+}
+
+/* normal vector of a sphere at given point */
+vec3 sphereNorm( vec3 pt, vec4 s )
+{
+  return ( pt - s.xyz )/ s.w;
+}
+
+vec3 getPOutOfRay (Ray r, float t)
+{
+  return r.origin+r.direction*t;
+}
+
+
+bool isPointWithinBounds(vec3 p,Cone c)
+{
+  vec3 E=p-c.v;
+  float EdP=dot(E,c.axis);
+  return ((EdP > c.inf) && (EdP < c.sup));
+}
+
+/* return min intersection between two intersection */
+/* return true if second one is taken */
+/* care: this is not a reflexive function */
+IntersectItem minInter(IntersectItem i1,
+                       IntersectItem i2, out bool isSecondTaken)
+{
+  isSecondTaken=false;
+  if (i1.isInter && i2.isInter)
+    {
+      /* both intersect */
+      /* we take min dist */
+      if (i1.dist<i2.dist)
+        return i1;
+      else
+        {
+          isSecondTaken=true;
+          return i2;
+        }
+    }
+  else if (i2.isInter)
+    {
+      /* second one intersect and first didn't */
+      isSecondTaken=true;
+      return i2;
+    }
+  /* if the second one didn't intersect */
+  /* then we return the first one  */
+  /* even though it might not intersect  */
+  return i1;
+}
+
+// ro is the ray origin, rd is the ray direction, and s is the sphere
+IntersectItem coneInter( Ray r, Cone c)
+{
+  IntersectItem ret=IntersectItem(false,CONE,-1.,
+                                  vec3(0.,0.,0.),
+                                  vec3(0.,0.,0.),
+                                  coneColor);
+
+  float AdD = dot(c.axis,r.direction);
+  float csqr= pow(c.ctheta,2.);
+  vec3 E=r.origin-c.v;
+  float AdE = dot(c.axis,E);
+  float DdE = dot(r.direction,E);
+  float EdE = dot(E,E);
+  float c2 = AdD*AdD - csqr;
+  float c1 = AdD*AdE - csqr*DdE;
+  float c0 = AdE*AdE - csqr*EdE;
+
+  if(abs(c2)>=0.)
+    {
+      float discr = c1*c1 - c0*c2;
+      if(discr < 0.)
+        {
+          // Q(t) = 0 has no real-valued roots.  The line does not
+          // intersect the double-sided cone.
+        }
+      else if (discr > 0.)
+        {
+          // Q(t) = 0 has two distinct real-valued roots.  However, one or
+          // both of them might intersect the portion of the double-sided
+          // cone "behind" the vertex.  We are interested only in those
+          // intersections "in front" of the vertex.
+          float root = sqrt(discr);
+          float invC2 = 1./c2;
+
+
+          /* check for the two intersection */
+          /* first */
+          float t1=(-c1 - root)*invC2;
+          vec3 p1=getPOutOfRay(r,t1);
+          /* second */
+          float t2=(-c1 + root)*invC2;
+          vec3 p2=getPOutOfRay(r,t2);
+
+          if(isPointWithinBounds(p1,c))
+            {
+              /* first intersection within inf/sup bounds */
+              ret.p=p1;
+              ret.dist=t1;
+              ret.normalVector=coneNorm(ret.p,c);
+              ret.isInter=true;
+            }
+          else if(isPointWithinBounds(p2,c))
+            {
+              /* first intersection within inf/sup bounds */
+              ret.p=p2;
+              ret.dist=t2;
+              ret.normalVector=coneNorm(ret.p,c);
+              ret.isInter=true;
+            }
+        }
+      else
+        {
+          // One repeated real root (line is tangent to the cone).
+          ret.dist=c1/c2;
+          ret.p=getPOutOfRay(r,ret.dist);
+          ret.normalVector=coneNorm(ret.p,c);
+          ret.isInter=isPointWithinBounds(ret.p,c);
+        }
+    }
+  else if (abs(c1) >= 0.)
+    {
+      // c2 = 0, c1 != 0 (D is a direction vector on the cone boundary)
+      ret.dist=0.5*c0/c1;
+      ret.p=getPOutOfRay(r,ret.dist);
+      ret.normalVector=coneNorm(ret.p,c);
+      ret.isInter=isPointWithinBounds(ret.p,c);
+    }
+  return ret;
+}
+
+
+IntersectItem sphereInter( Ray r, vec4 s)
+{
+  IntersectItem ret=IntersectItem(false,SPHERE,
+                                  -1.,
+                                  vec3(0.,0.,0.),
+                                  vec3(0.,0.,0.),
+                                  sphereColor);
+  // Transform the ray into object space
+  vec3 oro = r.origin - s.xyz;
+
+  float a = dot(r.direction, r.direction);
+  float b = 2.0 * dot(oro, r.direction);
+  float c = dot(oro, oro) - s.w * s.w; // w is the sphere radius
+
+  float d = b * b - 4.0 * a * c;
+
+  if(d >= 0.0)
+    {
+      ret.dist=(-b - sqrt(d)) / 2.0;
+      ret.isInter=true;
+      ret.p=getPOutOfRay(r,ret.dist);
+      ret.normalVector=sphereNorm(ret.p,s);
+    }
+  return ret;
+}
+
+
+
+bool intersect( Ray r, out vec3 norm, out vec3 color )
+{
+
+  vec3 pt;
+  // If we wanted multiple objects in the scene you would loop through them here
+  // and return the normal and color with the closest intersection point (lowest dist)
+
+  float interDistSphere;
+  int sphereIndex=0;
+  int coneIndex=0;
+  IntersectItem firstIntersected=sphereInter(r,sphereItems[0]);
+  IntersectItem tmpIntersected;
+  bool hasChanged=false;
+  for (int i=1;i<NUMBER_OF_SPHERES;i++)
+    {
+      tmpIntersected=sphereInter(r,sphereItems[i]);
+      firstIntersected=minInter(firstIntersected,
+                                tmpIntersected,hasChanged);
+      if (hasChanged)
+        sphereIndex=i;
+    }
+  for (int i=0;i<NUMBER_OF_CONES;i++)
+    {
+      tmpIntersected=coneInter(r,coneItems[i]);
+      firstIntersected=minInter(firstIntersected,
+                                tmpIntersected,hasChanged);
+      if (hasChanged)
+        coneIndex=i;
+    }
+
+  color=firstIntersected.color;
+  norm=firstIntersected.normalVector;
+  return firstIntersected.isInter;
+}
+
+void main( void )
+{
+  for (int i=0;i<NUMBER_OF_SPHERES;i++)
+    {
+      sphereItems[i]=vec4(
+                          (float(i)/float(NUMBER_OF_SPHERES)-0.5)*sin(uTime)*5.,
+                          0.,
+                          -5.,
+                          1.
+                          );
+    }
+  for (int i=0;i<NUMBER_OF_CONES;i++)
+    {
+      coneItems[i]=Cone(
+                        vec3(
+                             (float(i)/float(NUMBER_OF_SPHERES)-0.5)*cos(uTime)*5.,-1.,-3.),
+                        vec3(0.,-1.,0.),
+                        0.3,
+                        cos(0.3),
+                        0.,
+                        0.8);
+    }
+
+  /* sphereItems[0]=vec4(sin(uTime)-0.5,cos(uTime)-0.5,5.,0.3); */
+  /* coneItems[0]=Cone( */
+  /*            vec3(0.,0.,0.), */
+  /*            vec3(0.,1.,0.), */
+  /*            0.4, */
+  /*            cos(0.4), */
+  /*            0., */
+  /*            1.); */
+
+  // Pixel coordinate of the fragment being rendered
+  vec2 uv = ( vTexCoord * uInverseTextureSize );
+
+  // Wiggle the sphere back and forth a bit
+  //sphere1.x = 1.5 * sin(uTime);
+  //sphere1.z = 0.5 * cos(uTime * 3.0);
+
+  // Cast a ray out from the eye position into the scene
+  Ray r=Ray(eyePos,normalize(vec3(uv , -1.0)));
+
+  vec3 rayColor = bgColor; // Default color if we don't intersect with anything
+
+  // See if the ray intesects with any objects.
+  // Provides the normal of the nearest intersection point and color
+  vec3 objNorm, objColor;
+  bool isInter = intersect(r, objNorm, objColor);
+
+  if ( isInter ) {
+    float diffuse = clamp(dot(objNorm, lightDir), 0.0, 1.0); // diffuse factor
+    rayColor = objColor * diffuse + ambient;
+  }
+  else
+    discard;
+
+  gl_FragColor = vec4(rayColor, 1.0);
+}
+</script>
+
+<!-- End Shaders -->
+
+<script type="text/javascript">
+
+  // @see http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+  window.requestAnimFrame = (function(){
+      return  window.requestAnimationFrame       ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        window.oRequestAnimationFrame      ||
+        window.msRequestAnimationFrame     ||
+        function(/* function */ callback, /* DOMElement */ element){
+        window.setTimeout(callback, 1000 / 60);
+      };
+    })();
+
+// get the DOM element to attach to
+// - assume we've got jQuery to hand
+var $container = $('#container');
+
+// create a WebGL renderer, camera
+var rayTracingRenderer = new THREE.WebGLRenderer();
+rayTracingRenderer.autoClear=false;
+rayTracingRenderer.autoClearColor=false;
+rayTracingRenderer.multiResFactor=4.;
+rayTracingRenderer.multiResWidth=window.innerWidth/rayTracingRenderer.multiResFactor;
+rayTracingRenderer.multiResHeight=window.innerHeight/rayTracingRenderer.multiResFactor;
+rayTracingRenderer.setSize(rayTracingRenderer.multiResWidth,rayTracingRenderer.multiResHeight);
+rayTracingRenderer.setSize(window.innerWidth,window.innerHeight);
+rayTracingRenderer.setSize(rayTracingRenderer.multiResWidth,rayTracingRenderer.multiResHeight);
+// rayTracingRenderer.setSize(rayTracingRenderer.multiResWidth,rayTracingRenderer.multiResHeight);
+
+var pars={ minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat };
+rayTracingRenderer.rTracedTexture = new THREE.WebGLRenderTarget( rayTracingRenderer.multiResWidth,
+                                                                 rayTracingRenderer.multiResHeight);
+
+
+var stats = new Stats();
+
+camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+cameraRTT = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, -10000, 10000 );
+
+camera.position.z = 300;
+
+var scene = new THREE.Scene();
+var scenePostProcess = new THREE.Scene();
+
+
+
+// attach the render-supplied DOM element
+// $container.append(rayTracingRenderer.domElement);
+$container.append(rayTracingRenderer.domElement);
+// create the Stats element and append it to the Dome
+stats = new Stats();
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.top = '0px';
+$container.append( stats.domElement );
+
+
+function Cylinder (s1,s2) {
+  this.A = new THREE.Vector3(s1);
+  this.radiusA = s1[3];
+  this.B = new THREE.Vector3(s2);
+  this.radiusB = s2[3];
+}
+
+Cylinder.prototype.toCone = function ()
+{
+  var ret;
+
+  var AB = THREE.Vector3.subVectors(B,A);
+  ret.axis = AB.normalize(); //new?
+
+  var distVA = this.radiusA * AB.length() / (this.radiusB-this.radiusA);
+
+  ret.v = ret.axis.multiplyScalar(distVA); //we have bv instead of vb
+
+  ret.theta=Math.atan(this.radiusA/distVA);
+  ret.ctheta=Math.cos(ret.theta);
+  ret.inf=distVA;
+  ret.sup=this.radiusB/this.radiusA * distVA;
+  return ret;
+}
+
+  var sceneItems = {
+  spheres : new Array(),
+  cylinders : new Array(),
+  numberOfSpheres : 0,
+  numberOfcylinders : 0,
+  addSphere : function (s) {
+      spheres[numberOfSpheres] = s;
+      numberOfSpheres++;
+    },
+  addCylinders : function (c) {
+      cones[numberOfCylinders] = c;
+      numberOfCylinders++;
+    },
+  writeShader : function ()
+  {
+  }
+  };
+
+var attributes = {
+};
+
+var uniforms = {
+ uTime:  {
+  type: 'f', // a float
+  value: 1
+ },
+ uInverseTextureSize: {
+  type: 'v2',
+  value: new THREE.Vector2(window.innerWidth/(window.innerHeight+window.innerWidth),window.innerHeight/(window.innerHeight+window.innerWidth))
+ }
+};
+
+
+
+var rayTracingMaterial = new THREE.ShaderMaterial({
+  uniforms:         uniforms,
+      attributes:     attributes,
+      vertexShader:   $('#vertexshader').text(),
+      fragmentShader: $('#fragmentRayTracer').text()
+      });
+
+
+var postProcessMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff,
+      map: rayTracingRenderer.rTracedTexture
+      });
+// map: THREE.ImageUtils.loadTexture( "texture.jpg" )
+
+
+
+// rayTracingRenderer.rTracedTexture } );
+// var postProcessMaterial = new THREE.ShaderMateria({
+//     uniforms:      {
+//      uTex : {
+//          type: "t",
+//          value : rayTracingRenderer.rTracedTexture
+//      }
+//     },
+//     map: rayTracingRenderer.rTracedTexture,
+//     attributes:     attributes,
+//     vertexShader:   $('#vertexshader').text(),
+//     fragmentShader: $('#fragmentPostProcess').text()
+// });
+
+
+var plane = new THREE.PlaneGeometry( 2, 2);
+var quad = new THREE.Mesh( plane, rayTracingMaterial );
+var planePost = new THREE.PlaneGeometry( window.innerWidth,window.innerHeight);
+var quadPost = new THREE.Mesh( planePost, postProcessMaterial );
+
+// var mat2 = new THREE.MeshPhongMaterial( { color: 0x550000, specular: 0xff2200, shininess: 5 } );
+// var geometry = new THREE.TorusGeometry( 100, 25, 15, 30 );
+// var zmesh2 = new THREE.Mesh( geometry, mat2 );
+// zmesh2.position.set( 0, 150, 100 );
+// zmesh2.scale.set( 0.75, 0.75, 0.75 );
+// scenePostProcess.add( zmesh2 );
+
+
+//add the quad to the scene
+scene.add(quad);
+scenePostProcess.add(quadPost);
+
+var frame = 0;
+
+// draw!
+function update()
+{
+  uniforms.uTime.value = frame;
+  frame += 0.02;
+
+  // render ray traced scene
+
+  rayTracingRenderer.setSize(rayTracingRenderer.multiResWidth,
+                             rayTracingRenderer.multiResHeight);
+  rayTracingRenderer.render(scene, camera, rayTracingRenderer.rTracedTexture, true);
+  // scale it
+
+  rayTracingRenderer.setSize(window.innerWidth,window.innerHeight);
+  rayTracingRenderer.render(scenePostProcess, cameraRTT);
+  requestAnimFrame(update);
+  // set up the next call
+  stats.update();
+}
+
+requestAnimFrame(update);
+</script>
+</body>
+</html>
