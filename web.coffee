@@ -11,6 +11,7 @@ publicFiles = [
         "home",
         "contact",
         "projects",
+        "work",
         "raytracer"
 ]
 

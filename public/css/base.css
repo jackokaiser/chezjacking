@@ -91,6 +91,13 @@ strong {
 }
 .asset {
     padding: 2.5% 0%;
+    padding-top: 8%;
+}
+
+.note {
+    color : #286020;
+    font-size: 70%;
+    text-align : left;
 }
 .footer {
     color: #cccccc;

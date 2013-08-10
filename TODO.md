@@ -1,0 +1,4 @@
+- fix cross domain links
+- correct "about"
+- write "projects"
+- raytracer with spheres and alpha
