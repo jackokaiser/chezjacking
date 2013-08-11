@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>three.js webgl - render-to-texture</title>
+    <title>Chez Jacking</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="icon" type="image/png" href="img/favicon.ico">
     <style>
       body {
       color: #ffffff;
@@ -31,6 +32,11 @@
 
 
   <body>
+    <div id="info">
+      <a href="www.jacqueskaiser.com" target="_blank">ChezJacking</a> - A basic sphere tracer</br>
+      MOVE mouse &amp; press LEFT: rotate, MIDDLE: zoom, RIGHT: pan
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 
     <div id="container"></div>
@@ -418,7 +424,7 @@ void main ()
           (Math.random() - 0.5) * 80,
           (Math.random() - 0.5) * 80,
           (Math.random() - 0.5) * 80,
-          (Math.random() * 10)));
+          ((Math.random()+0.2) * 10)));
   }
 
 
