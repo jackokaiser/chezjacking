@@ -39,6 +39,7 @@
     <script src="js/libs/three.min.js"></script>
     <script src="js/libs/stats.min.js"></script>
     <script src="js/libs/TrackballControls.js"></script>
+    <script src="js/libs/OrbitControls.js"></script>
     <script src="js/libs/Detector.js"></script>
 
     <!-- Shaders -->
@@ -120,7 +121,7 @@
 <script type="x-shader/x-fragment" id="raytracer-frag">
 //! FRAGMENT
 
-#define MAX_DISTANCE 2048.
+#define MAX_DISTANCE 4096.
 
 
 /* STRUCT DEFINITION */
@@ -273,7 +274,7 @@ vec4 computeIntersectedColor (in IntersectItem boom)
 
 vec4 discardPixel ()
 {
-  return vec4(0);
+  return vec4(vRayDir,1.);
 }
 
 void main( void )
@@ -346,6 +347,8 @@ void main ()
   rayTracingRenderer.rTracedTexture = new THREE.WebGLRenderTarget( WIDTH,
                                                                    HEIGHT);
 
+  var viewProjectionInverse = new THREE.Matrix4();
+  var eyePos = new THREE.Vector3();
 
   var stats = new Stats();
 
@@ -355,7 +358,9 @@ void main ()
                                             10000 );
 
   camera.position.z = 300;
-
+  camera.position.set(0.3,0.1,-1.);
+  camera.up = new THREE.Vector3(0,1,0);
+  camera.lookAt(new THREE.Vector3(0,0,0));
   var controls = new THREE.TrackballControls( camera );
 
   controls.rotateSpeed = 1.0;
@@ -385,17 +390,14 @@ void main ()
   container.append( stats.domElement );
 
 
-  var origin = new THREE.Vector3(0,0,0);
-  var viewProjectionInverse = new THREE.Matrix4();
-  var eyePos = new THREE.Vector3();
-
   function updateCamera() {
       camera.updateMatrixWorld();
       camera.updateMatrix();
       camera.projectionMatrixInverse.getInverse( camera.projectionMatrix );
       viewProjectionInverse.multiplyMatrices( camera.matrixWorld,
                                               camera.projectionMatrixInverse );
-      eyePos = camera.localToWorld(origin);
+      viewProjectionInverse.transpose();
+      eyePos = camera.localToWorld(new THREE.Vector3(0.,0.,0.));
   }
 
   var attributes = {
@@ -410,6 +412,10 @@ void main ()
       }
   };
   var sphereData = [];
+
+  sphereData.push(new THREE.Vector4(0.,0.,-50.,6.));
+  sphereData.push(new THREE.Vector4(30.,0.,-100.,50.));
+  sphereData.push(new THREE.Vector4(0.,30.,-100.,50.));
 
   sphereData.push(new THREE.Vector4(42.,-40.,-100.,50.));
   sphereData.push(new THREE.Vector4(-2.,4.,-10.,1.));
@@ -450,6 +456,9 @@ void main ()
   var rayQuad = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2),
                                 rayTracingMaterial
                               );
+  rayQuad.geometry.computeBoundingBox();
+  rayQuad.geometry.computeBoundingSphere();
+
   //add the quad to the scene
   scene.add(rayQuad);
   var rayTracingCamera = new THREE.OrthographicCamera( WIDTH / - 2,
@@ -464,8 +473,7 @@ void main ()
   // draw!
   function render()
   {
-      // updateCamera();
-
+      updateCamera();
       // render ray traced scene
       rayTracingRenderer.render(scene, rayTracingCamera);
       // set up the next call
