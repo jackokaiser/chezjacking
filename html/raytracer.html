@@ -73,7 +73,7 @@
 
       void main( void )
       {
-        vec3 uPointLight = vec3(0);
+        vec3 uPointLight = vec3(1);
 
 
         gl_Position = vec4(position.xy,-1., 1);
@@ -274,7 +274,10 @@ vec4 computeIntersectedColor (in IntersectItem boom)
 
   float specularContrib = (pow(max(dot(reflect(lightDir,boom.normalVector),eyeToP),0.),sceneMaterial.shininess));
 
-  return vec4(vec3(0.,67.,47.)/100. *(diffuseContrib + specularContrib),
+  vec3 color1 = vec3(0.,67.,47.)/100.;
+  /* vec3 color=smoothstep(color1,color2,normalize(boom.p)); */
+  vec3 color=normalize(abs(boom.p));
+  return vec4( color * (diffuseContrib + specularContrib),
               1.);
 }
 
