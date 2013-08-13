@@ -281,7 +281,7 @@ vec4 computeIntersectedColor (in IntersectItem boom)
                                 cos(boom.p.y/40.*3.14)+1.01,
                                 cos(-boom.p.z/40.*3.14)+1.01)
                            );
-  return vec4( color * (diffuseContrib + specularContrib),
+      return vec4( sqrt(color * (diffuseContrib + specularContrib)),
               1.);
 }
 
@@ -302,6 +302,7 @@ void main( void )
   if ( objectBoom.dist < MAX_DISTANCE )
     {
       gl_FragColor = computeIntersectedColor(objectBoom);
+
       return;
     }
   else
