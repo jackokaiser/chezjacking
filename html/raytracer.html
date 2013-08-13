@@ -274,9 +274,13 @@ vec4 computeIntersectedColor (in IntersectItem boom)
 
   float specularContrib = (pow(max(dot(reflect(lightDir,boom.normalVector),eyeToP),0.),sceneMaterial.shininess));
 
-  vec3 color1 = vec3(0.,67.,47.)/100.;
+  /* vec3 color1 = vec3(0.,67.,47.)/100.; */
   /* vec3 color=smoothstep(color1,color2,normalize(boom.p)); */
-  vec3 color=normalize(abs(boom.p));
+      vec3 color=normalize(vec3(
+                                sin(boom.p.x/40.*3.14)+1.01,
+                                cos(boom.p.y/40.*3.14)+1.01,
+                                cos(-boom.p.z/40.*3.14)+1.01)
+                           );
   return vec4( color * (diffuseContrib + specularContrib),
               1.);
 }
