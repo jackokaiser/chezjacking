@@ -600,6 +600,7 @@ void main ()
                                                        -1, 10000 );
   function animate() {
       requestAnimationFrame( animate );
+      stats.update();
       controls.update();
   }
   // draw!
@@ -609,7 +610,6 @@ void main ()
       // render ray traced scene
       rayTracingRenderer.render(scene, rayTracingCamera);
       // set up the next call
-      stats.update();
   }
 
   // first call
