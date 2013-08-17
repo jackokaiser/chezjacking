@@ -166,6 +166,7 @@ struct IntersectItem {
   float dist;
   vec3 p;
   vec3 normalVector;
+  vec3 color;
 };
 
 struct Light {
@@ -192,6 +193,8 @@ struct ObjectMaterial {
 //               Distributed under the MIT License. See LICENSE file.
 //               https://github.com/ashima/webgl-noise
 //
+
+const vec4 plane = vec4 (0.,1.,0.,45.);
 
 vec3 mod289(vec3 x) {
   return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -355,6 +358,15 @@ void sphereInter(in Ray r,in vec4 s, out IntersectItem ret)
     }
 }
 
+void planeInter (in Ray r,in vec4 pl, out IntersectItem ret)
+{
+    float t = -(dot(pl.xyz,r.origin)+pl.w)/dot(pl.xyz,r.direction);
+    ret.dist= (t<0. ? MAX_DISTANCE : t);
+
+    ret.color = vec3(1.);
+    ret.p=getPOutOfRay(r,ret.dist);
+    ret.normalVector=pl.xyz;
+}
 
 void intersect(in Ray r, out IntersectItem firstIntersected )
 {
@@ -370,6 +382,16 @@ void intersect(in Ray r, out IntersectItem firstIntersected )
       sphereInter(r,curSphere,tmpIntersected);
       firstIntersected = minInter(firstIntersected,tmpIntersected);
     }
+  firstIntersected.color=clamp(
+                               normalize(vec3(
+                                              sin(firstIntersected.p.x/40.*3.14)+1.01,
+                                              cos(firstIntersected.p.y/40.*3.14)+1.01,
+                                              cos(-firstIntersected.p.z/40.*3.14)+1.01)
+                                         ) * abs(snoise (firstIntersected.p/5.))
+                               ,0.,1.);
+  planeInter(r,plane,tmpIntersected);
+  firstIntersected = minInter(firstIntersected,tmpIntersected);
+
 }
 
 vec4 computeIntersectedColor (in IntersectItem boom)
@@ -390,15 +412,8 @@ vec4 computeIntersectedColor (in IntersectItem boom)
 
   /* vec3 color1 = vec3(0.,67.,47.)/100.; */
   /* vec3 color=smoothstep(color1,color2,normalize(boom.p)); */
-  vec3 color=clamp(
-                   normalize(vec3(
-                                  sin(boom.p.x/40.*3.14)+1.01,
-                                  cos(boom.p.y/40.*3.14)+1.01,
-                                  cos(-boom.p.z/40.*3.14)+1.01)
-                             ) * abs(snoise (boom.p/5.))
-                   ,0.,1.);
 
-      return vec4( sqrt(color * (diffuseContrib + specularContrib + ambientContrib)),
+      return vec4( sqrt(boom.color * (diffuseContrib + specularContrib + ambientContrib)),
               1.);
 }
 
