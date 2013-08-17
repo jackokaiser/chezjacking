@@ -87,7 +87,7 @@
 
       void main( void )
       {
-        vec3 uPointLight = vec3(1);
+        vec3 uPointLight = vec3(20.,60.,-10.);
 
 
         gl_Position = vec4(position.xy,-1., 1);
@@ -96,7 +96,8 @@
         /* discardTexCoord = (position.xy + 1.)/2.; */
         /* debug=(position.xy+1.)/2.; */
         /* point light is attached to the camera */
-        vPointLight = uPointLight+uEyePos;
+        vPointLight = uPointLight;
+        /* vPointLight = uPointLight+uEyePos; */
 
         /* computing the ray direction vector  */
         /* we have to unproject the near plane's tile */
@@ -194,7 +195,7 @@ struct ObjectMaterial {
 //               https://github.com/ashima/webgl-noise
 //
 
-const vec4 plane = vec4 (0.,1.,0.,45.);
+const vec4 plane = vec4 (0.,1.,0.,28.);
 
 vec3 mod289(vec3 x) {
   return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -394,33 +395,72 @@ void intersect(in Ray r, out IntersectItem firstIntersected )
 
 }
 
-vec4 computeIntersectedColor (in IntersectItem boom)
+bool isShadowed (in vec3 p)
 {
+  vec3 newDir = normalize(vPointLight - p);
+  Ray r = Ray (p+newDir*0.1,newDir);
+
+  IntersectItem tmpIntersected;
+  vec4 curSphere;
+
+  for (int i = 0; i < NUMBER_OF_SPHERES; i++)
+    {
+      /* fetch current sphere */
+      curSphere=uSpheres[i];
+      sphereInter(r,curSphere,tmpIntersected);
+      if (tmpIntersected.dist<MAX_DISTANCE)
+        return true;
+    }
+  return false;
+}
+
+vec4 computeColor (in IntersectItem boom)
+{
+  if (isShadowed(boom.p))
+    {
+      return vec4(vec3(0),0.8);
+    }
+
   vec3 lightDir = normalize(vPointLight - boom.p);
   /* normalize the normal vector */
   boom.normalVector = normalize(boom.normalVector);
 
   vec3 eyeToP = normalize(boom.p - uEyePos);
-  /* col = texture2D(uBackgroundRTT,abs(normalize(reflect(eyeToP,boom.normalVector).xy))).xyz + */
-  /*   vec3(0.,0.,0.) ; */
-  /* return; */
+
   float ambientContrib = sceneMaterial.ambientCoef;
 
   float diffuseContrib = sceneMaterial.diffuseCoef * max(dot(lightDir,boom.normalVector),0.);
 
   float specularContrib = (pow(max(dot(reflect(lightDir,boom.normalVector),eyeToP),0.),sceneMaterial.shininess));
 
-  /* vec3 color1 = vec3(0.,67.,47.)/100.; */
-  /* vec3 color=smoothstep(color1,color2,normalize(boom.p)); */
-
       return vec4( sqrt(boom.color * (diffuseContrib + specularContrib + ambientContrib)),
-              1.);
+              0.58);
 }
 
 vec4 discardPixel ()
 {
       return vec4(normalize(abs(vRayDir)),1.);
 }
+
+vec4 computeIntersectedColor (in IntersectItem boom, in Ray reflected)
+{
+  IntersectItem boom2;
+  intersect(reflected,boom2);
+  vec4 color1=computeColor(boom);
+
+  vec4 color2;
+  if (boom2.dist<MAX_DISTANCE)
+     color2=computeColor(boom2);
+  else
+      color2 = discardPixel();
+  color2*=0.3;
+
+      return vec4(
+                  color1.rgb*color1.a + color2.rgb*(1.-color1.a),
+                  1.);
+}
+
+
 
 void main( void )
 {
@@ -430,10 +470,12 @@ void main( void )
   // See if the ray intesects with any objects.
   // Provides the normal of the nearest intersection point and color
   intersect(r,objectBoom);
+  vec3 refDirection=normalize(reflect(r.direction,objectBoom.normalVector));
+  Ray reflected = Ray(objectBoom.p+refDirection*0.1,refDirection);
   /* intersection! */
   if ( objectBoom.dist < MAX_DISTANCE )
     {
-      gl_FragColor = computeIntersectedColor(objectBoom);
+      gl_FragColor = computeIntersectedColor(objectBoom,reflected);
 
       return;
     }
@@ -562,9 +604,9 @@ void main ()
   for (var i=0;i<20;i++)
   {
       sphereData.push(new THREE.Vector4(
-          (Math.random() - 0.5) * 80,
-          (Math.random() - 0.5) * 80,
-          (Math.random() - 0.5) * 80,
+          (Math.random() - 0.5) * i * 30,
+          (Math.random() - 0.5) * 20,
+          (Math.random() - 0.5) * i * 30,
           ((Math.random()+0.2) * 10)));
   }
 
