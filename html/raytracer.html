@@ -87,7 +87,7 @@
 
       void main( void )
       {
-        vec3 uPointLight = vec3(20.,60.,-10.);
+        vec3 uPointLight = vec3(20.,60.,80.);
 
 
         gl_Position = vec4(position.xy,-1., 1);
@@ -167,7 +167,7 @@ struct IntersectItem {
   float dist;
   vec3 p;
   vec3 normalVector;
-  vec3 color;
+  vec4 color;
 };
 
 struct Light {
@@ -364,7 +364,7 @@ void planeInter (in Ray r,in vec4 pl, out IntersectItem ret)
     float t = -(dot(pl.xyz,r.origin)+pl.w)/dot(pl.xyz,r.direction);
     ret.dist= (t<0. ? MAX_DISTANCE : t);
 
-    ret.color = vec3(1.);
+    ret.color = vec4(vec3(1.),0.3);
     ret.p=getPOutOfRay(r,ret.dist);
     ret.normalVector=pl.xyz;
 }
@@ -383,13 +383,15 @@ void intersect(in Ray r, out IntersectItem firstIntersected )
       sphereInter(r,curSphere,tmpIntersected);
       firstIntersected = minInter(firstIntersected,tmpIntersected);
     }
-  firstIntersected.color=clamp(
-                               normalize(vec3(
-                                              sin(firstIntersected.p.x/40.*3.14)+1.01,
-                                              cos(firstIntersected.p.y/40.*3.14)+1.01,
-                                              cos(-firstIntersected.p.z/40.*3.14)+1.01)
-                                         ) * abs(snoise (firstIntersected.p/5.))
-                               ,0.,1.);
+      firstIntersected.color=vec4(
+                                  clamp(
+                                        normalize(vec3(
+                                                       sin(firstIntersected.p.x/40.*3.14)+1.01,
+                                                       cos(firstIntersected.p.y/40.*3.14)+1.01,
+                                                       cos(-firstIntersected.p.z/40.*3.14)+1.01)
+                                                  ) * abs(snoise (firstIntersected.p/5.))
+                                        ,0.,1.),
+                                  0.9);
   planeInter(r,plane,tmpIntersected);
   firstIntersected = minInter(firstIntersected,tmpIntersected);
 
@@ -418,7 +420,7 @@ vec4 computeColor (in IntersectItem boom)
 {
   if (isShadowed(boom.p))
     {
-      return vec4(vec3(0),0.8);
+      return vec4(vec3(0),0.9);
     }
 
   vec3 lightDir = normalize(vPointLight - boom.p);
@@ -433,8 +435,7 @@ vec4 computeColor (in IntersectItem boom)
 
   float specularContrib = (pow(max(dot(reflect(lightDir,boom.normalVector),eyeToP),0.),sceneMaterial.shininess));
 
-      return vec4( sqrt(boom.color * (diffuseContrib + specularContrib + ambientContrib)),
-              0.58);
+  return  boom.color * (diffuseContrib + specularContrib + ambientContrib);
 }
 
 vec4 discardPixel ()
@@ -452,7 +453,7 @@ vec4 computeIntersectedColor (in IntersectItem boom, in Ray reflected)
   if (boom2.dist<MAX_DISTANCE)
      color2=computeColor(boom2);
   else
-      color2 = discardPixel();
+      color2 = discardPixel()*0.2;
   color2*=0.3;
 
       return vec4(
