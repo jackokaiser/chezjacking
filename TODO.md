@@ -1,4 +1,3 @@
-- fix cross domain links
-- correct "about"
-- write "projects"
-- raytracer with spheres and alpha
+- clean actuality feed
+- add cakefile
+- use gitignore and remove node modules from tracked files
