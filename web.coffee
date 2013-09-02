@@ -1,10 +1,17 @@
 express = require "express"
 fs = require "fs"
 url = require "url"
+assets = require "connect-assets"
+
+
+
 
 app = express()
 app.use express.logger()
 app.use express.static __dirname + '/public'
+app.use assets({
+        src: "public"
+        })
 
 publicFiles = [
         "about",
