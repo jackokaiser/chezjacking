@@ -3,7 +3,7 @@ jQuery ($) ->
                 .rss("https://github.com/jackokaiser.atom",
                         {
                                 limit: 10,
-                                entryTemplate: '<li><div class="weak-p">{title}</div><div class="date">{formatedDate}</div></li>',
+                                entryTemplate: '<li><div class="weak-p">{title}</div><div class="small-right">{formatedDate}</div></li>',
                                 effect: 'slideSynced',
                                 tokens: {
                                         formatedDate : (entry,tokens) ->

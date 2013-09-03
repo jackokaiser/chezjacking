@@ -27,7 +27,7 @@
 /* All form factors */
 
 /* Main body and headings */
-body{
+body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     background-color : #ded1a0;
 }
@@ -101,9 +101,10 @@ strong {
 
 .note {
     color : #286020;
-    font-size: 70%;
+    font-size: 90%;
     text-align : left;
 }
+
 .footer {
     color: #cccccc;
     text-align: center;
@@ -147,9 +148,9 @@ strong {
     font-size:13px;
 }
 
-.date {
+.small-right {
     text-align: right;
-    color : green;
+    color : #286020;
     font-size : 10px;
 }
 
