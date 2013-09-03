@@ -108,7 +108,7 @@ strong {
     color: #cccccc;
     text-align: center;
 }
-.footer p {
+.footer {
     font-size: 11px;
 }
 .footer a {
@@ -138,11 +138,24 @@ strong {
     z-index:-2;
 }
 
-.drop-shadow p {
+.drop-shadow {
     font-size:16px;
-    font-weight:bold;
 }
 
+
+.weak-p {
+    font-size:13px;
+}
+
+.date {
+    text-align: right;
+    color : green;
+    font-size : 10px;
+}
+
+.bold {
+    font-weight:bold;
+}
 /* Lifted corners */
 
 .lifted {
