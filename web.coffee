@@ -4,6 +4,15 @@ url = require "url"
 assets = require "connect-assets"
 
 
+redis = require('redis');
+redisURL = url.parse(process.env.REDISCLOUD_URL);
+client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+client.auth(redisURL.auth.split(":")[1]);
+
+client.set('foo', 'bar');
+client.get('foo',  (err, reply) ->
+    console.log(reply.toString()));
+
 
 
 app = express()
