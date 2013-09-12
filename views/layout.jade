@@ -1,0 +1,69 @@
+!!! 5
+html(lang='en')
+head
+    meta(charset='utf-8')
+    title Chez Jacking
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css')
+    link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css')
+    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css')
+    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js')
+    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js')
+    link(href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', type='text/css', href='css/base.css')
+    link(rel='icon', type='image/png', href='img/favicon.ico')
+    script(type='text/javascript')
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-42929181-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  body
+       http://twitter.github.io/bootstrap/examples/starter-template.html
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='/') Chezjacking
+          .nav-collapse.collapse
+            ul.nav
+              li.active
+                a(href='/home') Home
+              li
+                a(href='/projects') Projects
+              li
+                a(href='/work') Work
+              li
+                a(href='/about') About
+              li
+                a(href='/contact') Contact
+          //
+            /.nav-collapse
+    //
+       We use row-fluid inside containers to achieve a resizable layout.
+    //
+       blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/
+    //
+       http://stackoverflow.com/a/12270322
+    .container
+      //
+        Font and paired font of .heading/.subheading and body from Google Fonts
+      //
+         www.google.com/fonts/specimen/Ubuntu
+      //
+         www.google.com/fonts/specimen/Ubuntu#pairings
+      .row-fluid.heading
+        .span12
+          h1= title
+      .row-fluid.subheading
+        .span12
+          p.lead= subtitle
+      //
+        block content

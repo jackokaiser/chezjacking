@@ -1,0 +1,144 @@
+!!! 5
+html(lang='en')
+head
+    meta(charset='utf-8')
+    title Chez Jacking
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css')
+    link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css')
+    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css')
+    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js')
+    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js')
+    link(href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', type='text/css', href='css/base.css')
+    link(rel='icon', type='image/png', href='img/favicon.ico')
+    script(type='text/javascript')
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-42929181-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  body
+    //
+       Mobile-friendly navbar adapted from example.
+    //
+       http://twitter.github.io/bootstrap/examples/starter-template.html
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='/') Chezjacking
+          .nav-collapse.collapse
+            ul.nav
+              li.active
+                a(href='/home') Home
+              li
+                a(href='/projects') Projects
+              li
+                a(href='/work') Work
+              li
+                a(href='/about') About
+              li
+                a(href='/contact') Contact
+          //
+            /.nav-collapse
+    //
+       We use row-fluid inside containers to achieve a resizable layout.
+    //
+       blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/
+    //
+       http://stackoverflow.com/a/12270322
+    .container
+      //
+         Font and paired font of .heading/.subheading and body from Google Fonts
+      //
+         www.google.com/fonts/specimen/Ubuntu
+      //
+         www.google.com/fonts/specimen/Ubuntu#pairings
+      .row-fluid.heading
+        .span12
+          h1 Jacques KAISER
+      .row-fluid.subheading
+        .span12
+          //
+             Special typography from Bootstrap for lead paragraph.
+          //
+             http://twitter.github.io/bootstrap/base-css.html#typography
+          p.lead Welcome to my personal website
+      //
+         Beyond this part the marketing copy begins.
+      //
+         https://developer.mozilla.org/en-US/docs/Web/CSS/text-align
+      //
+         http://twitter.github.io/bootstrap/base-css.html#images
+      //
+         http://placehold.it
+      .row-fluid.section1
+        .span5.offset1.asset
+          img.img-polaroid(width='480', height='300', src='img/jungling.jpg')
+        .span5.copy.drop-shadow.lifted
+          p
+            | First of all, you should glance around my
+            a(href='/projects') web projects
+            | .
+            | Each of them tend to run from within the browser, though
+            | you'd need up-to-date GPU drivers and WebGL support.
+      .row-fluid.section2
+        .span5.offset1.copy.drop-shadow.lifted
+          p
+            | If you enjoyed the experience and want to know more about me,
+            | browse my
+            a(href='/about') about
+            | page. As I'm quite of a traveller,
+            | I'll try to keep my location up to date.
+        .span5.asset
+          img.img-polaroid(width='480', height='300', src='img/tricks.jpg')
+      .row-fluid.section3
+        .span5.offset1.asset
+          img.img-polaroid(width='480', height='300', src='img/postman.jpg')
+        .span5.copy.drop-shadow.lifted
+          p
+            | Job recruiter or hacker,
+            | do not hesitate to get in touch with me:
+            | you'll find all the required informations in the
+            a(href='/contact') contact
+            | page.
+            | Perhaps you'd also like to glance at my
+            a(href='/work') work experiences
+            | .
+      //
+         <\!-- Not crucial, but we put this under a CC By-SA 3.0 license. -\->
+      //
+         <\!-- http://creativecommons.org/licenses/ -\->
+      //
+         <div class="row-fluid footer">
+      //
+           <div class="span12">
+      //
+             <p>This work is licensed under
+      //
+               the <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC
+      //
+                 By-SA 3.0
+      //
+               </a>, without all the cruft that would otherwise be
+      //
+               put at the bottom of the page.</p>
+      //
+           </div>
+      //
+         </div>
+    script
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-42929181-2', 'chezjacking.tk');
+      ga('send', 'pageview');

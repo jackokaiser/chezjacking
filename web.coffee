@@ -3,8 +3,7 @@ fs = require "fs"
 url = require "url"
 assets = require "connect-assets"
 
-
-redis = require('redis');
+redis = require 'redis'
 redisURL = url.parse(process.env.REDISCLOUD_URL);
 client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 client.auth(redisURL.auth.split(":")[1]);
@@ -16,35 +15,59 @@ client.get('foo',  (err, reply) ->
 
 
 app = express()
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
 app.use express.logger()
 app.use express.static __dirname + '/public'
 app.use assets({
         src: "public"
         })
 
-publicFiles = [
-        "about",
-        "home",
-        "contact",
-        "projects",
-        "work",
-        "raytracer"
-]
 
-simpleRender = (request, response) ->
-        pathname = (url.parse request.url).pathname
-        buffer = fs.readFileSync "html"+pathname+".html"
-        # buffer = fs.readFileSync "public/html/index.html"
-        response.send buffer.toString()
-        # response.render("public/html/" + pathname + ".html");
+# /*
+#  * our routes
+#  */
+routes = {
+        contact : (req, res) -> res.render('contact',
+                {
+                        title : 'Contact',
+                        subtitle : 'Get in touch',
+                }),
+        about : (req, res) -> res.render('about',
+                {
+                        title : 'About',
+                        subtitle : 'Who am I?'
+                }),
+        home : (req, res) -> res.render('home',
+                {
+                        title : 'Jacques KAISER',
+                        subtitle : 'Welcome to my personal website',
+                }),
+        projects : (req, res) -> res.render('projects',
+                {
+                        title : 'Jacques KAISER',
+                        subtitle : 'Welcome to my personal website',
+                }),
+        work : (req, res) -> res.render('work',
+                {
+                        title : 'Jacques KAISER',
+                        subtitle : 'Welcome to my personal website',
+                }),
+        raytracer : (req, res) -> res.render('raytracer',
+                {
+                        title : 'Jacques KAISER',
+                        subtitle : 'Welcome to my personal website',
+                })
+}
 
-
-app.get '/' , (request,response) ->
-        buffer=fs.readFileSync "html/home.html"
-        response.send buffer.toString()
-
-
-app.get '/'+file, simpleRender for file in publicFiles
+app.get '/', routes.home
+app.get '/home', routes.home
+app.get '/contact', routes.contact
+app.get '/about', routes.about
+app.get '/raytracer', routes.raytracer
+app.get '/projects', routes.projects
+app.get '/work', routes.work
 
 port = process.env.PORT || 8080
 
