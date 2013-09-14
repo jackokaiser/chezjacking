@@ -1,147 +1,64 @@
-!!! 5
-html(lang='en')
-head
-    meta(charset='utf-8')
-    title Chez Jacking
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css')
-    link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css')
-    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css')
-    link(href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic', rel='stylesheet', type='text/css')
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800', rel='stylesheet', type='text/css')
-    link(rel='stylesheet', type='text/css', href='css/base.css')
-    link(rel='icon', type='image/png', href='img/favicon.ico')
-    script(type='text/javascript')
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-42929181-2']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-  body
-    //
-       Mobile-friendly navbar adapted from example.
-    //
-       http://twitter.github.io/bootstrap/examples/starter-template.html
-    .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.brand(href='/') Chezjacking
-          .nav-collapse.collapse
-            ul.nav
-              li
-                a(href='/home') Home
-              li
-                a(href='/projects') Projects
-              li
-                a(href='/work') Work
-              li
-                a(href='/about') About
-              li.active
-                a(href='/contact') Contact
-          //
-            /.nav-collapse
-    //
-       We use row-fluid inside containers to achieve a resizable layout.
-    //
-       blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/
-    //
-       http://stackoverflow.com/a/12270322
-    .container
-      //
-         Font and paired font of .heading/.subheading and body from Google Fonts
-      //
-         www.google.com/fonts/specimen/Ubuntu
-      //
-         www.google.com/fonts/specimen/Ubuntu#pairings
-      .row-fluid.heading
-        .span12
-          h1 Contact
-      .row-fluid.subheading
-        .span12
-          //
-             Special typography from Bootstrap for lead paragraph.
-          //
-             http://twitter.github.io/bootstrap/base-css.html#typography
-          p.lead Get in touch
-      //
-         Beyond this part the marketing copy begins.
-      //
-         https://developer.mozilla.org/en-US/docs/Web/CSS/text-align
-      //
-         http://twitter.github.io/bootstrap/base-css.html#images
-      //
-         http://placehold.it
-      .span6
-        .span5.well.drop-shadow.lifted
-          .row
-            .span2
-              a.thumbnail(href='/')
-                img(src='img/weddingMe.jpg', alt='')
-            .span3
-              p
-                strong Jacques KAISER
-              p Developper
-              p jacko.kaiser@gmail.com
-              p
-                a(href='www.chezjacking.tk') www.jacqueskaiser.com
-              .span3
-                a.social(href='http://www.linkedin.com/profile/view?id=97265989&locale=en_US')
-                  img(src='img/linkedin.png', width='35', alt='linkedin')
-                a.social(href='https://github.com/jackokaiser')
-                  img(src='img/github.png', width='35', alt='github')
-                a.social(href='img/cv.pdf')
-                  img(src='img/cvIcon.png', width='35', alt='resume')
-                a.social(href='https://plus.google.com/105897447355921804637')
-                  img(src='img/googleplus.jpg', width='35', alt='googleplus')
+extends layout
 
-      .row-fluid
-        .span5.drop-shadow.lifted
-          .centered
-            p
-              strong Location
-          .copy
-            p
-              | From now on, and until the 16th of October 2013, I'm living in Strasbourg, France.
-          .copy
-            p
-              | Afterward, I'll spend one year in Australia, starting with 6 months in Melbourne.
-      .span6.drop-shadow.raised
-        form
-          .controls.controls-row
-            input#name.span3(name='name', type='text', placeholder='Name')
-            input#email.span3(name='email', type='email', placeholder='Email address')
-          .controls
-            textarea#message.span6(name='message', placeholder='Your Message', rows='5')
-          .controls
-            button#contact-submit.btn.btn-primary.input-medium.pull-right(onclick='sendMail(); return false;', type='submit') Send
-      #rss-feeds.span4.drop-shadow.raised
-        .centered
+block content
+  .span6
+    .span5.well.drop-shadow.lifted
+      .row
+        .span2
+          a.thumbnail(href='/')
+            img(src='img/weddingMe.jpg', alt='')
+        .span3
           p
-            strong GitHub Feed
-        #rss-feeds
-    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js')
-    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js')
-    script(src='js/libs/jquery-1.6.4.min.js')
-    script(src='js/libs/jquery.rss.js')
-    script(src='js/rssFeedParser.js')
-    script
-      function sendMail() {
-      var link = "mailto:jacko.kaiser@gmail.com" +
-      "?&subject=" + escape("CzJk : "+document.getElementById('name').value + "<"+ document.getElementById('email').value+">") +
-      "&body=" + escape(document.getElementById('message').value);
-      window.location.href = link;
-      }
-    script
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-42929181-2', 'chezjacking.tk');
-      ga('send', 'pageview');
+            strong Jacques KAISER
+          p Developper
+          p jacko.kaiser@gmail.com
+          p
+            a(href='www.chezjacking.tk') www.jacqueskaiser.com
+          .span3
+            a.social(href='http://www.linkedin.com/profile/view?id=97265989&locale=en_US')
+              img(src='img/linkedin.png', width='35', alt='linkedin')
+            a.social(href='https://github.com/jackokaiser')
+              img(src='img/github.png', width='35', alt='github')
+            a.social(href='img/cv.pdf')
+              img(src='img/cvIcon.png', width='35', alt='resume')
+            a.social(href='https://plus.google.com/105897447355921804637')
+              img(src='img/googleplus.jpg', width='35', alt='googleplus')
+
+  .row-fluid
+    .span5.drop-shadow.lifted
+      .centered
+        p
+          strong Location
+      .copy
+        p
+          | From now on, and until the 16th of October 2013, I'm living in Strasbourg, France.
+      .copy
+        p
+          | Afterward, I'll spend one year in Australia, starting with 6 months in Melbourne.
+  .span6.drop-shadow.raised
+    form
+      .controls.controls-row
+        input#name.span3(name='name', type='text', placeholder='Name')
+        input#email.span3(name='email', type='email', placeholder='Email address')
+      .controls
+        textarea#message.span6(name='message', placeholder='Your Message', rows='5')
+      .controls
+        button#contact-submit.btn.btn-primary.input-medium.pull-right(onclick='sendMail(); return false;', type='submit') Send
+  #rss-feeds.span4.drop-shadow.raised
+    .centered
+      p
+        strong GitHub Feed
+
+block scripts
+  script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js')
+  script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js')
+  script(src='js/libs/jquery-1.6.4.min.js')
+  script(src='js/libs/jquery.rss.js')
+  script(src='js/rssFeedParser.js')
+  script
+    function sendMail() {
+    var link = "mailto:jacko.kaiser@gmail.com" +
+    "?&subject=" + escape("CzJk : "+document.getElementById('name').value + "<"+ document.getElementById('email').value+">") +
+    "&body=" + escape(document.getElementById('message').value);
+    window.location.href = link;
+    }

@@ -46,18 +46,18 @@ routes = {
                 }),
         projects : (req, res) -> res.render('projects',
                 {
-                        title : 'Jacques KAISER',
-                        subtitle : 'Welcome to my personal website',
+                        title : 'Projects',
+                        subtitle : "There you'll find some of my web projects",
                 }),
         work : (req, res) -> res.render('work',
                 {
-                        title : 'Jacques KAISER',
-                        subtitle : 'Welcome to my personal website',
+                        title : 'Work experiences',
+                        subtitle : 'My work experiences along with references',
                 }),
         raytracer : (req, res) -> res.render('raytracer',
                 {
-                        title : 'Jacques KAISER',
-                        subtitle : 'Welcome to my personal website',
+                        title : '- A basic sphere tracer',
+                        subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
                 })
 }
 

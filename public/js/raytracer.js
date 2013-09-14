@@ -13,8 +13,13 @@ window.requestAnimFrame = (function(){
         };
 })();
 
+NProgress.start();
+var idInter=setInterval(NProgress.inc,200);
+
 var stats;
 var controls;
+var vertexShader;
+var fragmentShader;
 
 function init ()
 {
@@ -145,9 +150,8 @@ function init ()
     var rayTracingMaterial = new THREE.ShaderMaterial({
         uniforms:         uniforms,
         attributes:     attributes,
-        vertexShader:   $('#raytracer-vert').text(),
-        fragmentShader: defines +
-            $('#raytracer-frag').text()
+        vertexShader:   vertexShader,
+        fragmentShader: defines + fragmentShader
     });
 
     var rayQuad = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2),
@@ -173,13 +177,34 @@ function animate() {
     controls.update();
 }
 
-NProgress.start();
-var idInter=setInterval(NProgress.inc,200);
-// var idInter=setInterval(NProgress.inc(),200);
-
-window.onload = function () {
+function go()
+{
     init();
     animate();
     clearInterval(idInter);
     NProgress.done();
+}
+
+function tryContinueVert (data)
+{
+    vertexShader = data;
+    if (fragmentShader)
+        go();
+}
+function tryContinueFrag (data)
+{
+    fragmentShader = data;
+    if (vertexShader)
+        go();
+}
+
+window.onload = function () {
+    // load vertex shader request and try to continue
+    $.ajax({
+        url : "glsl/raytracer.vert"
+    }).done(tryContinueVert);
+    // load fragment shader request and try to continue
+    $.ajax({
+        url : "glsl/raytracer.frag"
+    }).done(tryContinueFrag);
 };

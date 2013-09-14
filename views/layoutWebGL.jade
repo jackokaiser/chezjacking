@@ -1,0 +1,61 @@
+!!! 5
+html(lang='en')
+head
+    title Chez Jacking
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0')
+    link(rel='icon', type='image/png', href='img/favicon.ico')
+    link(href='css/nprogress.css', rel='stylesheet', type='text/css')
+    style
+      body {
+      color: #ffffff;
+      font-family:Monospace;
+      font-size:13px;
+      text-align:center;
+      font-weight: bold;
+      background-color: #000000;
+      margin: 0px;
+      overflow: hidden;
+      }
+      #info {
+      position: absolute;
+      top: 0px; width: 100%;
+      padding: 5px;
+      }
+      a {
+      color: #ffffff;
+      }
+    script(type='text/javascript')
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-42929181-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+body
+    #info
+      a(href='http://www.jacqueskaiser.com', target='_blank') ChezJacking
+      |  #{title} <br />
+      | #{subtitle}
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
+
+    #container
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
+    script(src='js/libs/three.min.js')
+    script(src='js/libs/stats.min.js')
+    script(src='js/libs/TrackballControls.js')
+    script(src='js/libs/OrbitControls.js')
+    script(src='js/libs/Detector.js')
+    script(src='js/libs/nprogress.js')
+    script
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-42929181-2', 'chezjacking.tk');
+      ga('send', 'pageview');
+
+    block scripts
