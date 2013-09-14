@@ -1,5 +1,0 @@
-jQuery = require "jQuery"
-
-jQuery  $ ->
-        $("#rss-feeds")
-        .rss("http://feeds.feedburner.com/premiumpixels")
