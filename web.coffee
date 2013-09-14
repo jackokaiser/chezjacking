@@ -65,7 +65,6 @@ routes = {
 }
 
 app.get '/', routes.home
-app.get '/home', routes.home
 app.get '/contact', routes.contact
 app.get '/about', routes.about
 app.get '/raytracer', routes.raytracer
