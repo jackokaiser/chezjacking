@@ -1,3 +1,0 @@
-- clean actuality feed
-- add cakefile
-- use gitignore and remove node modules from tracked files
