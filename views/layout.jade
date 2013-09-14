@@ -1,5 +1,10 @@
 !!! 5
 html(lang='en')
+  block link
+    -var selected = 'Home'; //default
+
+  -var menu = { 'Home': '/home',  'Projects': '/projects', 'Work': '/work', 'About': '/about', 'Contact': '/contact' };
+
 head
     meta(charset='utf-8')
     title Chez Jacking
@@ -12,7 +17,7 @@ head
     link(href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800', rel='stylesheet', type='text/css')
     link(rel='stylesheet', type='text/css', href='css/base.css')
-    link(rel='icon', type='image/png', href='img/favicon.ico')
+    // link(rel='icon', type='image/png', href='img/favicon.ico')
     script(type='text/javascript')
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-42929181-2']);
@@ -33,16 +38,13 @@ head
           a.brand(href='/') Chezjacking
           .nav-collapse.collapse
             ul.nav
-              li.active
-                a(href='/home') Home
-              li
-                a(href='/projects') Projects
-              li
-                a(href='/work') Work
-              li
-                a(href='/about') About
-              li
-                a(href='/contact') Contact
+              each val, key in menu
+                if selected === key
+                  li.active
+                    a(href=val, title=key)= key
+                else
+                  li
+                    a(href=val, title=key)= key
     .container
       .row-fluid.heading
         .span12

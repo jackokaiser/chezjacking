@@ -100,24 +100,22 @@ strong {
     padding: 2.5% 0%;
 }
 
+
 .tag-word {
     padding: 0.3em;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.3),0 1px 0 rgba(255, 255, 255, 0.4) inset;
-    background-color: #333;
     color: #fff;
     border: 1px solid #000!important;
     border-radius: 3px;
     text-decoration: none;
+    margin: 0.2%;
 }
 
-.tag-word-social {
-    padding: 0.3em;
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.3),0 1px 0 rgba(255, 255, 255, 0.4) inset;
+.t-technical {
+    background-color: #333;
+}
+.t-social {
     background-color: #a7378b;
-    color: #fff;
-    border: 1px solid #000!important;
-    border-radius: 3px;
-    text-decoration: none;
 }
 
 .note {

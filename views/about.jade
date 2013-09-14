@@ -1,19 +1,24 @@
 extends layout
 
+block link
+  -var selected="About"
+
 block subheading
   .row-fluid
-    div
-      span.tag-word-social Undertaking
-      span.tag-word-social Open minded
-      span.tag-word-social Quick learner
-      span.tag-word-social Easy going
-    img.img-circle.asset(src='img/gravatar.jpg', height='250', width='250')
-  .row-fluid
-    div
-      span.tag-word JavaScript
-      span.tag-word C++
-      span.tag-word Unix
-      span.tag-word WebGL
+    .row-fluid
+      span.tag-word.t-social Undertaking
+      span.tag-word.t-social Open minded
+      span.tag-word.t-social Quick learner
+      span.tag-word.t-social Easy going
+
+    .row-fluid
+      img.img-circle.asset(src='img/gravatar.jpg', height='250', width='250')
+
+    .row-fluid
+      span.tag-word.t-technical JavaScript
+      span.tag-word.t-technical C++
+      span.tag-word.t-technical Unix
+      span.tag-word.t-technical WebGL
 
 block content
   .row-fluid.section1
