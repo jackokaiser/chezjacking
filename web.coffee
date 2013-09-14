@@ -35,7 +35,7 @@ routes = {
         contact : (req, res) -> res.render('contact',
                 {
                         title : 'Contact',
-                        subtitle : 'Get in touch',
+                        subtitle : 'Get in touch'
                 }),
         about : (req, res) -> res.render('about',
                 {
