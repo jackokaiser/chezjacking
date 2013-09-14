@@ -40,10 +40,17 @@ p.lead {
     font-size: 24px;
     line-height: 30px;
 }
+
+p.long {
+    font-size: 16px;
+    line-height: 24px;
+}
+
 p {
     font-size: 18px;
     line-height: 24px;
 }
+
 
 .centered {
     text-align : center;
@@ -75,17 +82,7 @@ strong {
     padding-bottom: 2.5%;
     text-align: justify;
 }
-.item-desc {
-/* top : 50%; */
-/* line-height : 150%; */
-/* border-radius:20px; */
-/* padding-top: 120px; */
-/* background-color: #91d4c4; */
-/* background-color: #e2d6a8; */
-}
-.spacer12{
-    padding: 4% 0%;
-}
+
 .perspective:after {
     display:none;
 }
@@ -108,7 +105,7 @@ strong {
     border: 1px solid #000!important;
     border-radius: 3px;
     text-decoration: none;
-    margin: 0.2%;
+    margin: 0.15%;
 }
 
 .t-technical {

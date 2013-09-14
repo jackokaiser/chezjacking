@@ -22,7 +22,7 @@ block subheading
 
 block content
   .row-fluid.section1
-    .span10.offset1.copy.drop-shadow.raised
+    #description.span10.offset1.copy.drop-shadow.raised
       :markdown
         Hi there, and welcome to this page.
         This is my very first post, on my very first website. I decided to start one, as I thought it was a nice, simple and innovative way of expression. This website will also be an ideal platform to show my work later on. But before we get started, let me introduce myself a bit.
@@ -45,3 +45,10 @@ block content
         I'll try to provide relevant informations on my work through this website, on the [apps page](/projects "projects"). Do not hesitate to get in touch with me, you'd find my contact details [there](/contact "contact").
 
         Jacques KAISER
+
+
+block scripts
+  script
+    // markdown automatically creates paragraphs
+    // in order to choose font-size we need to bind them to a class
+    $('#description').find('p').addClass('long');
