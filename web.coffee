@@ -3,16 +3,21 @@ fs = require "fs"
 url = require "url"
 assets = require "connect-assets"
 
-redis = require 'redis'
-redisURL = url.parse(process.env.REDISCLOUD_URL);
-client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
+# redis = require 'redis'
+# redisURL = url.parse(process.env.REDISCLOUD_URL);
+# client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+# client.auth(redisURL.auth.split(":")[1]);
 
-# client.set('foo', 'bar');
-# client.get('foo',  (err, reply) ->
-#     console.log(reply.toString()));
+# client.lrange('posts', 0 , 1,
+#         (err,reply) ->
+#                 posts = reply.toString())
 
+# console.log(posts);
 
+posts = {
+        'post1' : 'first post! yihaa',
+        'post2' : 'second post! woohoo'
+}
 
 app = express()
 
@@ -61,6 +66,12 @@ routes = {
                 {
                         title : '- A basic sphere tracer',
                         subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+                }),
+        news : (req, res) -> res.render('news',
+                {
+                        title : 'News',
+                        subtitle : 'The blog part',
+                        posts : posts
                 })
 }
 
@@ -70,6 +81,7 @@ app.get '/about', routes.about
 app.get '/raytracer', routes.raytracer
 app.get '/projects', routes.projects
 app.get '/work', routes.work
+app.get '/news', routes.news
 
 port = process.env.PORT || 8080
 

@@ -1,0 +1,12 @@
+extends layout
+
+block link
+  -var selected = 'News';
+
+
+
+block content
+  each post, key in posts
+    .row-fluid.span12.drop-shadow.raised
+      p= key
+      p= post
