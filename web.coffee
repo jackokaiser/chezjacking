@@ -1,7 +1,6 @@
 express = require "express"
 fs = require "fs"
 url = require "url"
-assets = require "connect-assets"
 
 # redis = require 'redis'
 # redisURL = url.parse(process.env.REDISCLOUD_URL);
@@ -13,6 +12,7 @@ assets = require "connect-assets"
 #                 posts = reply.toString())
 
 # console.log(posts);
+
 
 posts = {
         'post1' : 'first post! yihaa',
@@ -26,10 +26,8 @@ app.set('view engine', 'jade');
 
 app.use express.favicon __dirname + '/public/img/favicon.ico'
 app.use express.logger()
+app.use require('connect-assets')()
 app.use express.static __dirname + '/public'
-app.use assets({
-        src: "public"
-        })
 
 
 
@@ -40,37 +38,45 @@ routes = {
         contact : (req, res) -> res.render('contact',
                 {
                         title : 'Contact',
-                        subtitle : 'Get in touch'
+                        subtitle : 'Get in touch',
+                        css : css
                 }),
         about : (req, res) -> res.render('about',
                 {
                         title : 'About',
-                        subtitle : 'Who am I?'
+                        subtitle : 'Who am I?',
+                        css : css
+
                 }),
         home : (req, res) -> res.render('home',
                 {
                         title : 'Jacques KAISER',
                         subtitle : 'Welcome to my personal website',
+                        css : css
                 }),
         projects : (req, res) -> res.render('projects',
                 {
                         title : 'Projects',
                         subtitle : "There you'll find some of my web projects",
+                        css : css
                 }),
         work : (req, res) -> res.render('work',
                 {
                         title : 'Work experiences',
                         subtitle : 'My work experiences along with references',
+                        css : css
                 }),
         raytracer : (req, res) -> res.render('raytracer',
                 {
                         title : '- A basic sphere tracer',
                         subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+                        css : css
                 }),
         news : (req, res) -> res.render('news',
                 {
                         title : 'News',
                         subtitle : 'The blog part',
+                        css : css,
                         posts : posts
                 })
 }

@@ -6,7 +6,9 @@
     "coffee-script":">=1.1.3",
     "markdown-js": "*",
     "connect-assets":"*",
-    "jade": "*"
+    "jade": "*",
+    "stylus" : "*",
+    "bootstrap-stylus" : "*"
   },
   "engines": {
     "node": "0.10.x",
