@@ -36,49 +36,41 @@ app.use express.static __dirname + '/public'
 #  */
 routes = {
         contact : (req, res) -> res.render('contact',
-                {
-                        title : 'Contact',
-                        subtitle : 'Get in touch',
-                        css : css
-                }),
+                title : 'Contact',
+                subtitle : 'Get in touch',
+                css : css,
+                js : js),
         about : (req, res) -> res.render('about',
-                {
-                        title : 'About',
-                        subtitle : 'Who am I?',
-                        css : css
-
-                }),
+                title : 'About',
+                subtitle : 'Who am I?',
+                css : css,
+                js : js),
         home : (req, res) -> res.render('home',
-                {
-                        title : 'Jacques KAISER',
-                        subtitle : 'Welcome to my personal website',
-                        css : css
-                }),
+                title : 'Jacques KAISER',
+                subtitle : 'Welcome to my personal website',
+                css : css,
+                js : js),
         projects : (req, res) -> res.render('projects',
-                {
-                        title : 'Projects',
-                        subtitle : "There you'll find some of my web projects",
-                        css : css
-                }),
+                title : 'Projects',
+                subtitle : "There you'll find some of my web projects",
+                css : css,
+                js : js),
         work : (req, res) -> res.render('work',
-                {
-                        title : 'Work experiences',
-                        subtitle : 'My work experiences along with references',
-                        css : css
-                }),
+                title : 'Work experiences',
+                subtitle : 'My work experiences along with references',
+                css : css,
+                js : js),
         raytracer : (req, res) -> res.render('raytracer',
-                {
-                        title : '- A basic sphere tracer',
-                        subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
-                        css : css
-                }),
+                title : '- A basic sphere tracer',
+                subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+                css : css,
+                js : js),
         news : (req, res) -> res.render('news',
-                {
-                        title : 'News',
-                        subtitle : 'The blog part',
-                        css : css,
-                        posts : posts
-                })
+                title : 'News',
+                subtitle : 'The blog part',
+                css : css,
+                js : js,
+                posts : posts)
 }
 
 app.get '/', routes.home
