@@ -1,17 +1,18 @@
 express = require "express"
 fs = require "fs"
 url = require "url"
+assets = require 'connect-assets'
+redis = require 'redis'
 
-# redis = require 'redis'
-# redisURL = url.parse(process.env.REDISCLOUD_URL);
-# client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-# client.auth(redisURL.auth.split(":")[1]);
+redisURL = url.parse(process.env.REDISCLOUD_URL);
+client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+client.auth(redisURL.auth.split(":")[1]);
 
-# client.lrange('posts', 0 , 1,
-#         (err,reply) ->
-#                 posts = reply.toString())
+client.lrange('posts', 0 , 1,
+        (err,reply) ->
+                posts = reply.toString())
 
-# console.log(posts);
+console.log(posts);
 
 
 posts = {
@@ -26,7 +27,7 @@ app.set('view engine', 'jade');
 
 app.use express.favicon __dirname + '/public/img/favicon.ico'
 app.use express.logger()
-app.use require('connect-assets')()
+app.use assets()
 app.use express.static __dirname + '/public'
 
 
@@ -70,8 +71,10 @@ routes = {
                 subtitle : 'The blog part',
                 css : css,
                 js : js,
-                posts : posts)
+                posts : posts),
+        teaser : (req, res) -> res.render('teaser',{})
 }
+
 
 app.get '/', routes.home
 app.get '/contact', routes.contact
@@ -80,6 +83,7 @@ app.get '/raytracer', routes.raytracer
 app.get '/projects', routes.projects
 app.get '/work', routes.work
 app.get '/news', routes.news
+app.get '/teaser', routes.teaser
 
 port = process.env.PORT || 8080
 
