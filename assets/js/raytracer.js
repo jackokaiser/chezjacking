@@ -1,6 +1,5 @@
 "use strict";
 
-
 // @see http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
@@ -21,14 +20,31 @@ var controls;
 var vertexShader;
 var fragmentShader;
 
-function init ()
+// get the DOM element to attach to
+// - assume we've got jQuery to hand
+var container = $('#container');
+
+if(window.embed)
 {
+    stats={};
+    stats.update=function(){};
+}
+else
+{
+    $('#info').fadeIn();
+    stats = new Stats();
+    // create the Stats element and append it to the Dome
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.top = '0px';
+    container.append( stats.domElement );
+}
+
+function init (callback)
+{
+
     var WIDTH = window.innerWidth;
     var HEIGHT = window.innerHeight;
 
-    // get the DOM element to attach to
-    // - assume we've got jQuery to hand
-    var container = $('#container');
 
     // create a WebGL renderer, camera
     var rayTracingRenderer = new THREE.WebGLRenderer();
@@ -84,11 +100,6 @@ function init ()
     // $container.append(rayTracingRenderer.domElement);
     container.append(rayTracingRenderer.domElement);
 
-    stats = new Stats();
-    // create the Stats element and append it to the Dome
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    container.append( stats.domElement );
 
 
     function updateCamera() {
@@ -167,6 +178,7 @@ function init ()
                                                          HEIGHT / 2,
                                                          HEIGHT / - 2,
                                                          -1, 10000 );
+    callback();
 }
 
 
@@ -179,10 +191,18 @@ function animate() {
 
 function go()
 {
-    init();
-    animate();
-    clearInterval(idInter);
-    NProgress.done();
+    try {
+        init( function ()
+              {
+                  animate();
+                  clearInterval(idInter);
+                  NProgress.done();
+              });
+    }
+    catch(e) {
+        // failed to init, show an img
+        $('#backup-img').show();
+    }
 }
 
 function tryContinueVert (data)

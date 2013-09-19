@@ -4,21 +4,21 @@ url = require "url"
 assets = require 'connect-assets'
 redis = require 'redis'
 
-redisURL = url.parse(process.env.REDISCLOUD_URL);
-client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
+# redisURL = url.parse(process.env.REDISCLOUD_URL);
+# client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+# client.auth(redisURL.auth.split(":")[1]);
 
-client.lrange('posts', 0 , 1,
-        (err,reply) ->
-                posts = reply.toString())
+# client.lrange('posts', 0 , 1,
+#         (err,reply) ->
+#                 posts = reply.toString())
 
-console.log(posts);
+# console.log(posts);
 
 
-posts = {
-        'post1' : 'first post! yihaa',
-        'post2' : 'second post! woohoo'
-}
+# posts = {
+#         'post1' : 'first post! yihaa',
+#         'post2' : 'second post! woohoo'
+# }
 
 app = express()
 
@@ -65,7 +65,14 @@ routes = {
                 title : '- A basic sphere tracer',
                 subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
                 css : css,
-                js : js),
+                js : js,
+                embed : false),
+        raytracerEmbed : (req, res) -> res.render('raytracer',
+                title : '- A basic sphere tracer',
+                subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+                css : css,
+                js : js,
+                embed : true),
         news : (req, res) -> res.render('news',
                 title : 'News',
                 subtitle : 'The blog part',
@@ -80,9 +87,10 @@ app.get '/', routes.home
 app.get '/contact', routes.contact
 app.get '/about', routes.about
 app.get '/raytracer', routes.raytracer
+app.get '/raytracerEmbed', routes.raytracerEmbed
 app.get '/projects', routes.projects
 app.get '/work', routes.work
-app.get '/news', routes.news
+# app.get '/news', routes.news
 app.get '/teaser', routes.teaser
 
 port = process.env.PORT || 8080
