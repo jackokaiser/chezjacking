@@ -20,6 +20,7 @@ var controls;
 var vertexShader;
 var fragmentShader;
 
+
 // get the DOM element to attach to
 // - assume we've got jQuery to hand
 var container = $('#container');
