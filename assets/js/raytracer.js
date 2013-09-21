@@ -16,6 +16,8 @@ NProgress.start();
 var idInter=setInterval(NProgress.inc,200);
 
 var stats;
+var numberOfSpheres;
+var sphereRadius;
 var controls;
 var vertexShader;
 var fragmentShader;
@@ -29,6 +31,8 @@ if(window.embed)
 {
     stats={};
     stats.update=function(){};
+    numberOfSpheres=4;
+    sphereRadius=35;
 }
 else
 {
@@ -38,6 +42,8 @@ else
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.top = '0px';
     container.append( stats.domElement );
+    numberOfSpheres=20;
+    sphereRadius=10;
 }
 
 function init (callback)
@@ -126,13 +132,13 @@ function init (callback)
     };
     var sphereData = [];
 
-    for (var i=0;i<20;i++)
+    for (var i=0;i<numberOfSpheres;i++)
     {
         sphereData.push(new THREE.Vector4(
-            (Math.random() - 0.5) * i * 30,
-            (Math.random() - 0.5) * 20,
-            (Math.random() - 0.5) * i * 30,
-            ((Math.random()+0.2) * 10)));
+            (Math.random() - 0.5) * i * 3 * sphereRadius,
+            (Math.random() - 0.5) * 2 * sphereRadius,
+            (Math.random() - 0.5) * i * 3 * sphereRadius,
+            ((Math.random()+0.5) * sphereRadius)));
     }
 
     var d = new Date();
