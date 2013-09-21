@@ -32,55 +32,55 @@ app.use express.static __dirname + '/public'
 
 
 
+
 # /*
 #  * our routes
 #  */
-routes = {
-        contact : (req, res) -> res.render('contact',
-                title : 'Contact',
-                subtitle : 'Get in touch',
-                css : css,
-                js : js),
-        about : (req, res) -> res.render('about',
-                title : 'About',
-                subtitle : 'Who am I?',
-                css : css,
-                js : js),
-        home : (req, res) -> res.render('home',
-                title : 'Jacques KAISER',
-                subtitle : 'Welcome to my personal website',
-                css : css,
-                js : js),
-        projects : (req, res) -> res.render('projects',
-                title : 'Projects',
-                subtitle : "There you'll find some of my web projects",
-                css : css,
-                js : js),
-        work : (req, res) -> res.render('work',
-                title : 'Work experiences',
-                subtitle : 'My work experiences along with references',
-                css : css,
-                js : js),
-        raytracer : (req, res) -> res.render('raytracer',
-                title : '- A basic sphere tracer',
-                subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
-                css : css,
-                js : js,
-                embed : false),
-        raytracerEmbed : (req, res) -> res.render('raytracer',
-                title : '- A basic sphere tracer',
-                subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
-                css : css,
-                js : js,
-                embed : true),
-        news : (req, res) -> res.render('news',
-                title : 'News',
-                subtitle : 'The blog part',
-                css : css,
-                js : js,
-                posts : posts),
-        teaser : (req, res) -> res.render('teaser',{})
-}
+routes =
+    contact : (req, res) -> res.render('contact',
+            title : 'Contact',
+            subtitle : 'Get in touch',
+            css : css,
+            js : js),
+    about : (req, res) -> res.render('about',
+            title : 'About',
+            subtitle : 'Who am I?',
+            css : css,
+            js : js),
+    home : (req, res) -> res.render('home',
+            title : 'Jacques KAISER',
+            subtitle : 'Welcome to my personal website',
+            css : css,
+            js : js),
+    projects : (req, res) -> res.render('projects',
+            title : 'Projects',
+            subtitle : "There you'll find some of my web projects",
+            css : css,
+            js : js),
+    work : (req, res) -> res.render('work',
+            title : 'Work experiences',
+            subtitle : 'My work experiences along with references',
+            css : css,
+            js : js),
+    raytracer : (req, res) -> res.render('raytracer',
+            title : '- A basic sphere tracer',
+            subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+            css : css,
+            js : js,
+            embed : false),
+    raytracerEmbed : (req, res) -> res.render('raytracer',
+            title : '- A basic sphere tracer',
+            subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+            css : css,
+            js : js,
+            embed : true),
+    news : (req, res) -> res.render('news',
+            title : 'News',
+            subtitle : 'The blog part',
+            css : css,
+            js : js,
+            posts : posts),
+    teaser : (req, res) -> res.render('teaser',{})
 
 
 app.get '/', routes.home
@@ -92,6 +92,22 @@ app.get '/projects', routes.projects
 app.get '/work', routes.work
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
+
+
+# handle server error middleware
+app.use (err, req, res, next) ->
+    # console.error(err.stack);
+    res.status(500).render('error',
+        title: '500',
+        subtitle: 'Server error'
+    );
+
+# handle file not found middleware
+app.use (req, res, next) ->
+    res.status(404).render('error',
+        title: '404',
+        subtitle: 'File not found'
+    );
 
 port = process.env.PORT || 8080
 

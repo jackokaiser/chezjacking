@@ -1,3 +1,8 @@
+@import url("http://fonts.googleapis.com/css?family=Jacques+Francois");
+@import url("http://fonts.googleapis.com/css?family=Lato");
+@import url("http://fonts.googleapis.com/css?family=Ubuntu");
+
+
 /* Large desktop */
 @media (min-width: 980px) {
     body {
@@ -31,8 +36,9 @@ body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     background-color : #ded1a0;
 }
+
 .heading, .subheading {
-    font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+    font-family:  'Ubuntu', 'Lato', Helvetica, Arial, sans-serif;
     text-align: center;
 }
 p.lead {
