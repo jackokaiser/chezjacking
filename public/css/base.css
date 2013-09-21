@@ -40,14 +40,15 @@ body {
 .banner {
     position: absolute;
     display: block;
-    top: 10px;
-    left: 10px;
+    top: 15px;
+    left: 0px;
     width: 184px;
     height: 206px;
     text-align: center;
     background-image: url(../img/banner-beta.png);
     text-indent: -10000px;
     background-repeat: no-repeat;
+    z-index:-1;
 }
 
 .heading, .subheading {
