@@ -24,14 +24,46 @@ void march (in Ray r, out float nextStepLength)
     {
       pToSphere = uSpheres[i].xyz - r.origin;
       distSquared=dot(pToSphere,pToSphere);
+      /* furry */
       nextStepLength=min(nextStepLength,
-                         distSquared - uSpheres[i].w);
+                         sqrt(distSquared) - uSpheres[i].w);
+      /* bubble */
+      /* nextStepLength=min(nextStepLength, */
+      /*                    sqrt(abs(distSquared - pow(uSpheres[i].w,2.)))); */
     }
 }
 
-vec4 computeColor (in Ray r,in float depth)
+vec4 computeColorBubble (in Ray r,in float depth)
 {
-  return vec4(vec3(depth/1000.),1.);
+  return vec4(abs(normalize(r.origin)),1.);
+}
+vec4 computeColorLambert (in Ray r,in float depth)
+{
+  vec3 normalSum=vec3(0);
+  float distSquared;
+  vec3 sphereToP;
+  float distToSurface;
+  for (int i=0;i<NUMBER_OF_SPHERES;i++)
+    {
+      sphereToP = r.origin - uSpheres[i].xyz;
+      distToSurface=abs(dot(sphereToP,sphereToP) - pow(uSpheres[i].w,2.));
+      /* current normal * weight  */
+      normalSum += (1./(distToSurface+1.)) * normalize(sphereToP);
+    }
+  if(length(normalSum)<0.5)
+    {
+      /* WEAK */
+      return vec4(0);
+    }
+  else
+    {
+      normalSum=normalize(normalSum);
+
+      vec3 color =vec3(0.1,0.7,0.4);
+      float lambert = clamp(abs(dot(vec3(0.,0.,-1.),normalSum)),0.,1.);
+      /* return vec4(abs(normalSum),1.); */
+      return vec4(color*lambert,1.);
+    }
 }
 
 void main ()
@@ -44,7 +76,7 @@ void main ()
     {
       march(r, nextStepLength);
       depth+=nextStepLength;
-      r.origin+=r.direction*sqrt(nextStepLength);
+      r.origin+=r.direction*nextStepLength;
     }
-  gl_FragColor = computeColor(r,depth);
+  gl_FragColor = computeColorLambert(r,depth);
 }

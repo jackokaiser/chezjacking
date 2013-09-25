@@ -19,13 +19,15 @@ numberOfSpheres=null
 sphereRadius=null
 sphereData=[]
 controls=null
+animate=null
+speed=1
 vertexShader=""
 fragmentShader=""
 
 if window.embed
     stats={}
     stats.update=() ->;
-    numberOfSpheres=4
+    numberOfSpheres=3
     sphereRadius=35
 else
     $('#info').fadeIn()
@@ -33,7 +35,7 @@ else
     stats.domElement.style.position = 'absolute'
     stats.domElement.style.top = '0px'
     container.append( stats.domElement )
-    numberOfSpheres=20
+    numberOfSpheres=5
     sphereRadius=10
 
 
@@ -81,50 +83,22 @@ init = (callback) ->
     controls.dynamicDampingFactor = 0.3
 
     controls.keys = [ 65, 83, 68 ]
+    # controls.addEventListener( 'change', render )
 
-    updateCamera = () ->
-        camera.updateMatrixWorld()
-        camera.updateMatrix()
-        camera.projectionMatrixInverse.getInverse camera.projectionMatrix
-        viewProjectionInverse.multiplyMatrices( camera.matrixWorld,
-            camera.projectionMatrixInverse )
-        viewProjectionInverse.transpose()
-        eyePos.copy(camera.localToWorld(new THREE.Vector3(0,0,0)))
+    ##########################################
+    ##########################################
+    ############### raytracer specific #######
+    ##########################################
+    ##########################################
+    generateRandomSphere = () ->
+        return new THREE.Vector4(
+            (Math.random()-0.5) * 20,
+            0,
+            (Math.random()-0.5) * 10,
+            (Math.random()+0.1) * 2)
 
-    render = () ->
-        updateCamera()
-        rayTracingRenderer.render(scene, rayTracingCamera)
-
-
-    controls.addEventListener( 'change', render )
-
-    scene = new THREE.Scene()
-
-    container.append(rayTracingRenderer.domElement)
-
-
-
-
-
-    attributes = {
-        sceneTilePosition : {
-            type : 'v2',
-            value : [
-                new THREE.Vector2(-1,1),
-                new THREE.Vector2(1,1),
-                new THREE.Vector2(-1,-1),
-                new THREE.Vector2(1,-1)
-            ]
-        }
-    }
-
-    d = new Date()
     for i in [0..numberOfSpheres]
-        sphereData.push(new THREE.Vector4(
-            (Math.random() - 0.5),
-            (Math.random() - 0.5),
-            (Math.random() - 0.5),
-            ((Math.random()+0.5) * sphereRadius)))
+        sphereData.push(generateRandomSphere())
 
     maxDistance = 0;
     curDist = 0;
@@ -132,7 +106,6 @@ init = (callback) ->
         curDist = eyePos.distanceTo(sphereData) + sphereData.w
         if curDist > maxDistance
             maxDistance = curDist
-
     uniforms = {
         uTime:  {
             type: 'f',
@@ -156,7 +129,15 @@ init = (callback) ->
         }
 
     }
-
+    attributes =
+        sceneTilePosition :
+            type : 'v2',
+            value : [
+                new THREE.Vector2(-1,1),
+                new THREE.Vector2(1,1),
+                new THREE.Vector2(-1,-1),
+                new THREE.Vector2(1,-1)
+            ]
 
     defines = "#define NUMBER_OF_SPHERES "+
         sphereData.length+"\n"
@@ -173,6 +154,9 @@ init = (callback) ->
     rayQuad.geometry.computeBoundingBox()
     rayQuad.geometry.computeBoundingSphere()
 
+
+
+    scene = new THREE.Scene()
     scene.add(rayQuad)
     rayTracingCamera = new THREE.OrthographicCamera( WIDTH / - 2,
         WIDTH / 2,
@@ -180,15 +164,65 @@ init = (callback) ->
         HEIGHT / - 2,
         -1, 10000 )
 
+    ##########################################
+    ##########################################
+    ############### app's functions ##########
+    ##########################################
+    ##########################################
+
+    updateCamera = () ->
+        camera.updateMatrixWorld()
+        camera.updateMatrix()
+        camera.projectionMatrixInverse.getInverse camera.projectionMatrix
+        viewProjectionInverse.multiplyMatrices( camera.matrixWorld,
+            camera.projectionMatrixInverse )
+        viewProjectionInverse.transpose()
+        eyePos.copy(camera.localToWorld(new THREE.Vector3(0,0,0)))
+
+
+
+
+    container.append(rayTracingRenderer.domElement)
+
+
+
+
+
+
+
+    updateSphere = (v4,timeElapsed) ->
+        # if v4.y > 20
+        #     v4.copy(generateRandomSphere())
+        # else
+        # update bubble like:
+        # it's going up
+        v4.y+=speed*timeElapsed*Math.random()
+        # # and as a sinusoide
+        # v4.x+=speed*timeElapsed*Math.sin(v4.y)
+        # v4.z+=speed*timeElapsed*Math.cos(v4.y)
+
+    begin = new Date().getTime()
+
+
+
+    animate = () ->
+        requestAnimFrame( animate )
+        stats.update()
+        controls.update()
+        updateCamera()
+        l = sphereData.length
+        now = new Date().getTime()-begin
+        begin=now
+        # for sphere in sphereData
+        #     updateSphere(sphere,now/(60*1000))
+        rayTracingRenderer.render(scene, rayTracingCamera)
+
+    # call the callback at the end of the init
     callback()
 
 
 
 
-animate = () ->
-    requestAnimFrame( animate )
-    stats.update()
-    controls.update()
 
 
 go = () ->
