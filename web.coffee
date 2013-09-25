@@ -74,6 +74,12 @@ routes =
             css : css,
             js : js,
             embed : true),
+    raymarcher : (req, res) -> res.render('raymarcher',
+            title : '- A basic sphere marcher',
+            subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+            css : css,
+            js : js,
+            embed : false),
     news : (req, res) -> res.render('news',
             title : 'News',
             subtitle : 'The blog part',
@@ -88,6 +94,7 @@ app.get '/contact', routes.contact
 app.get '/about', routes.about
 app.get '/raytracer', routes.raytracer
 app.get '/raytracerEmbed', routes.raytracerEmbed
+app.get '/raymarcher', routes.raymarcher
 app.get '/projects', routes.projects
 app.get '/work', routes.work
 # app.get '/news', routes.news

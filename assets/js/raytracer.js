@@ -61,7 +61,8 @@ function init (callback)
 
     var pars={ minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat };
     rayTracingRenderer.rTracedTexture = new THREE.WebGLRenderTarget( WIDTH,
-                                                                     HEIGHT);
+                                                                     HEIGHT,
+                                                                     pars);
 
 
     var viewProjectionInverse = new THREE.Matrix4();
@@ -191,7 +192,7 @@ function init (callback)
 
 
 function animate() {
-    requestAnimationFrame( animate );
+    requestAnimFrame( animate );
     stats.update();
     controls.update();
 }
