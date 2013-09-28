@@ -20,9 +20,10 @@ sphereRadius=null
 sphereData=[]
 controls=null
 animate=null
-speed=1
 vertexShader=""
 fragmentShader=""
+speedFactor = (r) ->
+    return 1/r*1.5
 
 if window.embed
     stats={}
@@ -59,6 +60,8 @@ init = (callback) ->
 
     viewProjectionInverse = new THREE.Matrix4()
     eyePos = new THREE.Vector3()
+    lightDirMain = new THREE.Vector3()
+    lightDirSide = new THREE.Vector3()
 
 
     camera = new THREE.PerspectiveCamera( 60,
@@ -66,7 +69,7 @@ init = (callback) ->
         1,
         1000 )
 
-    camera.position.set(0,0,100)
+    camera.position.set(0,2,15)
     camera.up = new THREE.Vector3(0,1,0)
     camera.lookAt(new THREE.Vector3(0,0,0))
 
@@ -97,6 +100,8 @@ init = (callback) ->
             (Math.random()-0.5) * 10,
             (Math.random()+0.1) * 2)
 
+    # original sphere: let's not touch it
+    sphereData.push(THREE.Vector4(0,0,0,2))
     for i in [0..numberOfSpheres]
         sphereData.push(generateRandomSphere())
 
@@ -115,6 +120,14 @@ init = (callback) ->
             type: 'v3',
             value : eyePos
         },
+        uLightDirMain : {
+            type: 'v3',
+            value : lightDirMain
+        },
+        uLightDirSide : {
+            type: 'v3',
+            value : lightDirSide
+        },
         uViewProjectionInverse: {
             type: 'm4',
             value: viewProjectionInverse
@@ -126,8 +139,7 @@ init = (callback) ->
         uMaxDistance : {
             type : 'f',
             value : maxDistance
-        }
-
+        },
     }
     attributes =
         sceneTilePosition :
@@ -170,6 +182,9 @@ init = (callback) ->
     ##########################################
     ##########################################
 
+    mlv = new THREE.Vector3(-0.5,-0.5,-1).normalize()
+    slv = new THREE.Vector3(0.2,0,0.7).normalize()
+
     updateCamera = () ->
         camera.updateMatrixWorld()
         camera.updateMatrix()
@@ -178,6 +193,9 @@ init = (callback) ->
             camera.projectionMatrixInverse )
         viewProjectionInverse.transpose()
         eyePos.copy(camera.localToWorld(new THREE.Vector3(0,0,0)))
+        projector = new THREE.Projector()
+        lightDirMain.copy(projector.unprojectVector(mlv, camera)).normalize()
+        lightDirSide.copy(projector.unprojectVector(slv, camera)).normalize()
 
 
 
@@ -191,18 +209,24 @@ init = (callback) ->
 
 
     updateSphere = (v4,timeElapsed) ->
-        # if v4.y > 20
-        #     v4.copy(generateRandomSphere())
-        # else
+        if v4.y > 10
+            v4.copy(generateRandomSphere())
+        else
         # update bubble like:
         # it's going up
-        v4.y+=speed*timeElapsed*Math.random()
+        v4.y+=speedFactor(v4.w)*timeElapsed*Math.random()
         # # and as a sinusoide
-        # v4.x+=speed*timeElapsed*Math.sin(v4.y)
-        # v4.z+=speed*timeElapsed*Math.cos(v4.y)
+        v4.x+=speedFactor(v4.w)*timeElapsed*Math.sin(v4.y)
+        v4.z+=speedFactor(v4.w)*timeElapsed*Math.cos(v4.y)
+
 
     begin = new Date().getTime()
 
+    updateSphereBuffer = (first, others...) ->
+        now = new Date().getTime()
+        for s in others
+            updateSphere(s,(now-begin)/1000)
+        begin = now
 
 
     animate = () ->
@@ -211,10 +235,8 @@ init = (callback) ->
         controls.update()
         updateCamera()
         l = sphereData.length
-        now = new Date().getTime()-begin
-        begin=now
-        # for sphere in sphereData
-        #     updateSphere(sphere,now/(60*1000))
+        # we don't hit the first one
+        updateSphereBuffer sphereData...
         rayTracingRenderer.render(scene, rayTracingCamera)
 
     # call the callback at the end of the init

@@ -4,6 +4,9 @@
 
 /* STRUCT DEFINITION */
 varying vec3 vRayDir;
+varying vec3 uLightDirMain;
+varying vec3 uLightDirSide;
+varying vec3 vRayDir;
 varying vec2 discardTexCoord;
 uniform float maxDistance;
 uniform vec3 uEyePos;
@@ -50,19 +53,26 @@ vec4 computeColorLambert (in Ray r,in float depth)
       /* current normal * weight  */
       normalSum += (1./(distToSurface+1.)) * normalize(sphereToP);
     }
-  if(length(normalSum)<0.5)
+  if(length(normalSum)<0.1)
     {
       /* WEAK */
-      return vec4(0);
+      return vec4(
+                  vec3(0.1,0.1,0.8) *
+                  (r.direction.y+1.)/2.,
+                  1.);
     }
   else
     {
       normalSum=normalize(normalSum);
 
-      vec3 color =vec3(0.1,0.7,0.4);
-      float lambert = clamp(abs(dot(vec3(0.,0.,-1.),normalSum)),0.,1.);
+      vec3 color1 =vec3(0.1,0.7,0.4);
+      vec3 color2 =vec3(1);
+      float lambert1 = clamp(abs(dot(uLightDirMain,normalSum)),0.,1.);
+      float lambert2 = clamp(abs(dot(uLightDirSide,normalSum)),0.,1.) * 0.2;
       /* return vec4(abs(normalSum),1.); */
-      return vec4(color*lambert,1.);
+      return vec4(clamp(color1*lambert1 + color2*lambert2,
+                        0.,1.)
+                  ,1.);
     }
 }
 
