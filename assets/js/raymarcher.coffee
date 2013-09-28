@@ -101,7 +101,7 @@ init = (callback) ->
             (Math.random()+0.1) * 2)
 
     # original sphere: let's not touch it
-    sphereData.push(THREE.Vector4(0,0,0,2))
+    sphereData.push(new THREE.Vector4(0,0,0,2))
     for i in [0..numberOfSpheres]
         sphereData.push(generateRandomSphere())
 
@@ -182,9 +182,6 @@ init = (callback) ->
     ##########################################
     ##########################################
 
-    mlv = new THREE.Vector3(-0.5,-0.5,-1).normalize()
-    slv = new THREE.Vector3(0.2,0,0.7).normalize()
-
     updateCamera = () ->
         camera.updateMatrixWorld()
         camera.updateMatrix()
@@ -194,8 +191,14 @@ init = (callback) ->
         viewProjectionInverse.transpose()
         eyePos.copy(camera.localToWorld(new THREE.Vector3(0,0,0)))
         projector = new THREE.Projector()
-        lightDirMain.copy(projector.unprojectVector(mlv, camera)).normalize()
-        lightDirSide.copy(projector.unprojectVector(slv, camera)).normalize()
+        lightDirMain.copy(projector.unprojectVector(
+            new THREE.Vector3(-0.5,-0.5,-1).normalize(), camera))
+            .sub(eyePos)
+            .normalize()
+        lightDirSide.copy(projector.unprojectVector(
+            new THREE.Vector3(1,0,0.1).normalize(), camera))
+            .sub(eyePos)
+            .normalize()
 
 
 
