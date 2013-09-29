@@ -8,8 +8,6 @@ window.requestAnimFrame =
         window.setTimeout(callback, 1000 / 60)
 
 
-NProgress.start()
-idInter=setInterval(NProgress.inc,200);
 
 
 container = $('#container')
@@ -25,6 +23,7 @@ fragmentShader=""
 speedFactor = (r) ->
     return 1/r*1.5
 
+
 if window.embed
     stats={}
     stats.update=() ->;
@@ -39,8 +38,9 @@ else
     numberOfSpheres=5
     sphereRadius=10
 
-
 init = (callback) ->
+    NProgress.start()
+    idInter=setInterval(NProgress.inc,200);
     WIDTH = window.innerWidth
     HEIGHT = window.innerHeight
     rayTracingRenderer = new THREE.WebGLRenderer()
@@ -244,36 +244,31 @@ init = (callback) ->
 
     # call the callback at the end of the init
     callback()
+    clearInterval(idInter)
+    NProgress.done()
 
 
 
 
 
 
-go = () ->
-    init(() ->
-        animate()
-        clearInterval(idInter)
-        NProgress.done())
-# go = () ->
-#     try
-#         init(
-#             () ->
-#                 animate()
-#                 clearInterval(idInter)
-#                 NProgress.done())
-#     catch e
-#         $('#backup-img').show()
+
+window.goMarcher = () ->
+    # if both shader loaded properly, let's go
+    if vertexShader && fragmentShader
+        container.unbind('click',window.goMarcher)
+        container.css('cursor','auto');
+        init(() ->
+            animate())
+
+container.click(window.goMarcher);
+
 
 tryContinueVert = (data) ->
     vertexShader = data
-    if (fragmentShader)
-        go()
 
 tryContinueFrag = (data) ->
     fragmentShader = data
-    if (vertexShader)
-        go()
 
 window.onload = () ->
     $.ajax(

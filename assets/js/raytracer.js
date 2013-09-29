@@ -12,8 +12,6 @@ window.requestAnimFrame = (function(){
         };
 })();
 
-NProgress.start();
-var idInter=setInterval(NProgress.inc,200);
 
 var stats;
 var numberOfSpheres;
@@ -36,7 +34,8 @@ if(window.embed)
 }
 else
 {
-    $('#info').fadeIn();
+    $('#container').show()
+    $('#info').fadeIn()
     stats = new Stats();
     // create the Stats element and append it to the Dome
     stats.domElement.style.position = 'absolute';
@@ -48,6 +47,9 @@ else
 
 function init (callback)
 {
+    NProgress.start();
+    var idInter=setInterval(NProgress.inc,200);
+    $('#container').fadeIn()
 
     var WIDTH = window.innerWidth;
     var HEIGHT = window.innerHeight;
@@ -187,6 +189,9 @@ function init (callback)
                                                          HEIGHT / - 2,
                                                          -1, 10000 );
     callback();
+    clearInterval(idInter);
+    NProgress.done();
+
 }
 
 
@@ -197,33 +202,27 @@ function animate() {
     controls.update();
 }
 
-function go()
+window.goTracer = function()
 {
-    try {
+    if (vertexShader && fragmentShader) {
+        container.unbind('click',window.goTracer)
+        container.css('cursor','auto');
         init( function ()
               {
                   animate();
-                  clearInterval(idInter);
-                  NProgress.done();
               });
     }
-    catch(e) {
-        // failed to init, show an img
-        $('#backup-img').show();
-    }
 }
+
+container.click(window.goTracer);
 
 function tryContinueVert (data)
 {
     vertexShader = data;
-    if (fragmentShader)
-        go();
 }
 function tryContinueFrag (data)
 {
     fragmentShader = data;
-    if (vertexShader)
-        go();
 }
 
 window.onload = function () {

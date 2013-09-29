@@ -1,8 +1,9 @@
 extends layoutWebGL
 
-
 block scripts
   if(embed)
-     script
-       window.embed=true;
+    script
+      window.embed=true;
+  script
+      $('#container').css('background-image','url(/img/raytracer.png)');
   != js('raytracer')
