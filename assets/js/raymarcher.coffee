@@ -69,7 +69,7 @@ init = (callback) ->
         1,
         1000 )
 
-    camera.position.set(0,2,15)
+    camera.position.set(0,0,15)
     camera.up = new THREE.Vector3(0,1,0)
     camera.lookAt(new THREE.Vector3(0,0,0))
 
@@ -96,12 +96,12 @@ init = (callback) ->
     generateRandomSphere = () ->
         return new THREE.Vector4(
             (Math.random()-0.5) * 20,
-            0,
+            -8,
             (Math.random()-0.5) * 10,
             (Math.random()+0.1) * 2)
 
     # original sphere: let's not touch it
-    sphereData.push(new THREE.Vector4(0,0,0,2))
+    sphereData.push(new THREE.Vector4(0,-8,0,5))
     for i in [0..numberOfSpheres]
         sphereData.push(generateRandomSphere())
 
@@ -217,7 +217,7 @@ init = (callback) ->
         else
         # update bubble like:
         # it's going up
-        v4.y+=speedFactor(v4.w)*timeElapsed*Math.random()
+        v4.y+=speedFactor(v4.w)*timeElapsed
         # # and as a sinusoide
         v4.x+=speedFactor(v4.w)*timeElapsed*Math.sin(v4.y)
         v4.z+=speedFactor(v4.w)*timeElapsed*Math.cos(v4.y)

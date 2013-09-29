@@ -64,7 +64,8 @@ vec4 computeColorLambert (in Ray r,in float depth)
     {
       normalSum=normalize(normalSum);
 
-      vec3 color1 =vec3(0.1,0.7,0.4);
+      vec3 color1 =vec3(0.7,0.2,0.1);
+      /* vec3 color1 =vec3(0.1,0.7,0.4); */
       vec3 color2 =vec3(1);
       float lambert1 = clamp(abs(dot(uLightDirMain,normalSum)),0.,1.);
       float lambert2 = clamp(abs(dot(uLightDirSide,normalSum)),0.,1.)*0.3;
