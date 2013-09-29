@@ -266,9 +266,13 @@ container.click(window.goMarcher);
 
 tryContinueVert = (data) ->
     vertexShader = data
+    if (!window.embed) && fragmentShader
+        window.goMarcher()
 
 tryContinueFrag = (data) ->
     fragmentShader = data
+    if (!window.embed) && vertexShader
+        window.goMarcher()
 
 window.onload = () ->
     $.ajax(

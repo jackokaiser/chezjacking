@@ -219,10 +219,14 @@ container.click(window.goTracer);
 function tryContinueVert (data)
 {
     vertexShader = data;
+    if ((!window.embed) && fragmentShader)
+        window.goTracer();
 }
 function tryContinueFrag (data)
 {
     fragmentShader = data;
+    if ((!window.embed) && vertexShader)
+        window.goTracer();
 }
 
 window.onload = function () {

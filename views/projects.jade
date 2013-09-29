@@ -15,20 +15,21 @@ block content
       .row-fluid
         .span12
           iframe(frameborder='0', height='500px', width='100%', allowfullscreen='allowFullScreen', webkitallowfullscreen='true', mozallowfullscreen='true', src="/raymarcherEmbed")
+        p.note Click on the image to start the demo
       .row-fluid
         .copy.span12
         :markdown
-           I implemented a small raytracer.
-           It is a standalone that I coded from scratch,
-           which supports spheres and cones.
-           I haven't put quite as much work as I did for the one I've
-           coded for [Skimlab](http://skimlab.com "Skimlab"), but still.
+          There, I coded a small raymarcher that emulates lava lamp behaviour.
+          The point was to highlight the differences between
+          a *Raytracer* and a *Raymarcher*.
+          When the first solves equations in order to find an intersection
+          with the surface,
+          the second evaluates potential of objects in space
+          and determines whether it has crossed the surface or not.
 
-           This one involves shadows, one level reflection,
-           and perlin noise to compute spheres' color.
-           It is running in real-time on my laptop.
+          Note that we can achieve smoother results with the marching techniques.
         .centered
-           a.btn.primary-btn.btn-large(href="/raytracer")
+           a.btn.primary-btn.btn-large(href="/raymarcher")
               | go fullscreen
 
   .row-fluid.section1
@@ -42,6 +43,7 @@ block content
       .row-fluid
         .span12
           iframe(frameborder='0', height='500px', width='100%', allowfullscreen='allowFullScreen', webkitallowfullscreen='true', mozallowfullscreen='true', src="/raytracerEmbed")
+        p.note Click on the image to start the demo
       .row-fluid
         .copy.span12
         :markdown
