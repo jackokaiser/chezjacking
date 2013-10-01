@@ -26,7 +26,6 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 app.use express.favicon __dirname + '/public/img/favicon.ico'
-app.use express.logger()
 app.use assets()
 app.use express.static __dirname + '/public'
 
@@ -108,21 +107,23 @@ app.get '/work', routes.work
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
 
+if process.env.NAME is "dev"
+    app.use express.logger 'dev'
+else
+    # handle server error middleware
+    app.use (err, req, res, next) ->
+        # console.error(err.stack);
+        res.status(500).render('error',
+            title: '500',
+            subtitle: 'Server error'
+        );
 
-# handle server error middleware
-app.use (err, req, res, next) ->
-    # console.error(err.stack);
-    res.status(500).render('error',
-        title: '500',
-        subtitle: 'Server error'
-    );
-
-# handle file not found middleware
-app.use (req, res, next) ->
-    res.status(404).render('error',
-        title: '404',
-        subtitle: 'File not found'
-    );
+    # handle file not found middleware
+    app.use (req, res, next) ->
+        res.status(404).render('error',
+            title: '404',
+            subtitle: 'File not found'
+        );
 
 port = process.env.PORT || 8080
 

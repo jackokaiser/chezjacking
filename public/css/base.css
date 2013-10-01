@@ -91,6 +91,10 @@ strong {
 .video, .thermometer, .order, .social, .statistics {
     text-align: center;
 }
+.social {
+    margin-left : 2%;
+    margin-right : 2%;
+}
 .statistics h3, .statistics p {
     color: white;
 }
