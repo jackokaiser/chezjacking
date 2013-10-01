@@ -3,7 +3,8 @@ fs = require "fs"
 url = require "url"
 assets = require 'connect-assets'
 redis = require 'redis'
-
+https = require('https');
+http = require('http');
 # redisURL = url.parse(process.env.REDISCLOUD_URL);
 # client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 # client.auth(redisURL.auth.split(":")[1]);
@@ -21,6 +22,12 @@ redis = require 'redis'
 # }
 
 app = express()
+
+options =
+  key: fs.readFileSync('ssl/jacqueskaiser.com.key'),
+  cert: fs.readFileSync('ssl/unified2.crt')
+
+
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -125,7 +132,13 @@ else
             subtitle: 'File not found'
         );
 
-port = process.env.PORT || 8080
+portHTTP = process.env.PORT || 8080
+portHTTPs = process.env.PORTs || 8081
 
-app.listen port, ->
-        console.log("Listening on " + port);
+# Create an HTTP service.
+http.createServer(app).listen(portHTTP);
+console.log("http listening on "+portHTTP)
+# Create an HTTPS service identical to the HTTP service.
+# https.createServer(options, app).listen(443);
+https.createServer(options, app).listen(portHTTPs);
+console.log("https listening on "+portHTTPs)
