@@ -11,6 +11,7 @@ window.requestAnimFrame =
 
 
 container = $('#container')
+player = $('#play-icon')
 
 stats=null
 numberOfSpheres=null
@@ -29,6 +30,7 @@ if window.embed
     stats.update=() ->;
     numberOfSpheres=3
     sphereRadius=35
+    player.fadeIn()
 else
     $('#info').fadeIn()
     stats = new Stats()
@@ -253,26 +255,26 @@ init = (callback) ->
 
 
 
-window.goMarcher = () ->
+window.go = () ->
     # if both shader loaded properly, let's go
     if vertexShader && fragmentShader
-        container.unbind('click',window.goMarcher)
+        container.unbind('click',window.go)
         container.css('cursor','auto');
+        player.fadeOut()
         init(() ->
             animate())
 
-container.click(window.goMarcher);
 
 
 tryContinueVert = (data) ->
     vertexShader = data
     if (!window.embed) && fragmentShader
-        window.goMarcher()
+        window.go()
 
 tryContinueFrag = (data) ->
     fragmentShader = data
     if (!window.embed) && vertexShader
-        window.goMarcher()
+        window.go()
 
 window.onload = () ->
     $.ajax(

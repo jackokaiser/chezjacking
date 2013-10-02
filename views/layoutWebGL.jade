@@ -6,8 +6,8 @@ head
     meta(name='viewport', content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0')
     link(rel='icon', type='image/png', href='img/favicon.ico')
     link(href='css/nprogress.css', rel='stylesheet', type='text/css')
-    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css')
-    link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css')
+    link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet")
+    link(href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet")
     != css('webgl-player')
     script(type='text/javascript')
       var _gaq = _gaq || [];
@@ -25,7 +25,9 @@ body
       |  #{title} <br />
       | #{subtitle}
     #container(itemscope itemtype="http://schema.org/Code" description="WebGL Raytracer")
-    // i#play-icon.icon-play-circle
+    button#play-icon.btn.btn-large.btn-primary
+      i.icon-play.icon-4x(style="vertical-align:middle;")
+      span#play-text Play !
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
     script(src='js/libs/three.min.js')
     script(src='js/libs/stats.min.js')
@@ -42,3 +44,7 @@ body
       ga('send', 'pageview');
 
     block scripts
+    script
+      // binding
+      $('#play-icon').click(window.go);
+      $('#container').click(window.go);

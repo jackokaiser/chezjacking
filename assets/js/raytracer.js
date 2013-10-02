@@ -24,6 +24,7 @@ var fragmentShader;
 // get the DOM element to attach to
 // - assume we've got jQuery to hand
 var container = $('#container');
+var player = $('#play-icon');
 
 if(window.embed)
 {
@@ -31,10 +32,10 @@ if(window.embed)
     stats.update=function(){};
     numberOfSpheres=4;
     sphereRadius=35;
+    player.fadeIn();
 }
 else
 {
-    $('#container').show()
     $('#info').fadeIn()
     stats = new Stats();
     // create the Stats element and append it to the Dome
@@ -202,11 +203,12 @@ function animate() {
     controls.update();
 }
 
-window.goTracer = function()
+window.go = function()
 {
     if (vertexShader && fragmentShader) {
-        container.unbind('click',window.goTracer)
+        container.unbind('click',window.go)
         container.css('cursor','auto');
+        player.fadeOut();
         init( function ()
               {
                   animate();
@@ -214,19 +216,17 @@ window.goTracer = function()
     }
 }
 
-container.click(window.goTracer);
-
 function tryContinueVert (data)
 {
     vertexShader = data;
     if ((!window.embed) && fragmentShader)
-        window.goTracer();
+        window.go();
 }
 function tryContinueFrag (data)
 {
     fragmentShader = data;
     if ((!window.embed) && vertexShader)
-        window.goTracer();
+        window.go();
 }
 
 window.onload = function () {
