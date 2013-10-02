@@ -32,6 +32,7 @@ app.set('env', process.env.NAME || 'prod');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
+app.use express.logger app.get 'env'
 app.use express.favicon __dirname + '/public/img/favicon.ico'
 app.use assets()
 app.use express.static __dirname + '/public'
@@ -116,7 +117,6 @@ app.get '/teaser', routes.teaser
 
 if app.get('env') is 'development'
     app.use express.errorHandler()
-    app.use express.logger 'dev'
 else
     # handle server error middleware
     app.use (err, req, res, next) ->
