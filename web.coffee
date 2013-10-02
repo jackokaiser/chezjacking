@@ -3,7 +3,6 @@ fs = require "fs"
 url = require "url"
 assets = require 'connect-assets'
 redis = require 'redis'
-https = require('https');
 http = require('http');
 # redisURL = url.parse(process.env.REDISCLOUD_URL);
 # client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
@@ -132,13 +131,6 @@ else
             subtitle: 'File not found'
         );
 
-portHTTP = process.env.PORT || 8080
-portHTTPs = process.env.PORTs || 8081
 
-# Create an HTTP service.
-http.createServer(app).listen(portHTTP);
-console.log("http listening on "+portHTTP)
-# Create an HTTPS service identical to the HTTP service.
-# https.createServer(options, app).listen(443);
-https.createServer(options, app).listen(portHTTPs);
-console.log("https listening on "+portHTTPs)
+http.createServer(app).listen(app.get('port'), ->
+    console.log('Express server listening on port ' + app.get('port'))
