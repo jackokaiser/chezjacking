@@ -22,10 +22,6 @@ http = require 'http'
 
 app = express()
 
-options =
-  key: fs.readFileSync('ssl/jacqueskaiser.com.key'),
-  cert: fs.readFileSync('ssl/unified2.crt')
-
 
 app.set('port', process.env.PORT || 8080);
 app.set('env', process.env.NAME || 'prod');
