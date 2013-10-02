@@ -27,7 +27,8 @@ options =
   cert: fs.readFileSync('ssl/unified2.crt')
 
 
-
+app.set('port', process.env.PORT || 8080);
+app.set('env', process.env.NAME || 'prod');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
@@ -113,7 +114,8 @@ app.get '/work', routes.work
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
 
-if process.env.NAME is "dev"
+if app.get('env') is 'development'
+    app.use express.errorHandler()
     app.use express.logger 'dev'
 else
     # handle server error middleware
@@ -133,4 +135,4 @@ else
 
 
 http.createServer(app).listen(app.get('port'), ->
-    console.log('Express server listening on port ' + app.get('port'))
+    console.log('Express server listening on port ' + app.get('port')))
