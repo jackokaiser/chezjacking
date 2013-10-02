@@ -115,23 +115,21 @@ app.get '/work', routes.work
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
 
-if app.get('env') is 'development'
-    app.use express.errorHandler()
-else
-    # handle server error middleware
-    app.use (err, req, res, next) ->
-        # console.error(err.stack);
-        res.status(500).render('error',
-            title: '500',
-            subtitle: 'Server error'
-        );
+app.use express.errorHandler()
+# handle server error middleware
+app.use (err, req, res, next) ->
+    console.error(err.stack);
+    res.status(500).render('error',
+        title: '500',
+        subtitle: 'Server error'
+    );
 
-    # handle file not found middleware
-    app.use (req, res, next) ->
-        res.status(404).render('error',
-            title: '404',
-            subtitle: 'File not found'
-        );
+# handle file not found middleware
+app.use (req, res, next) ->
+    res.status(404).render('error',
+        title: '404',
+        subtitle: 'File not found'
+    );
 
 
 http.createServer(app).listen(app.get('port'), ->
