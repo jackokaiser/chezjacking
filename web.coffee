@@ -45,6 +45,11 @@ routes =
             subtitle : 'Get in touch',
             css : css,
             js : js),
+    comment : (req, res) -> res.render('comment',
+            title : 'Comment',
+            subtitle : 'Say something',
+            css : css,
+            js : js),
     about : (req, res) -> res.render('about',
             title : 'About',
             subtitle : 'Who am I?',
@@ -101,6 +106,7 @@ routes =
 
 app.get '/', routes.home
 app.get '/contact', routes.contact
+app.get '/comment', routes.comment
 app.get '/about', routes.about
 app.get '/raytracer', routes.raytracer
 app.get '/raytracerEmbed', routes.raytracerEmbed

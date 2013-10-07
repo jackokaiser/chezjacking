@@ -1,0 +1,90 @@
+extends layout
+
+block link
+  -var selected="Comment"
+
+block contentNoContainer
+  .row-fluid
+    #board.span10.offset1
+      .span3
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+      .span3
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love p
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+      .span3
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love p
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+
+      .span3
+        .act
+          p
+          | Hey! blablabla, Love
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+        .act
+          p
+          | Hey! blablabla, Love your site, blablabla! You awesome.
+
+block scripts
+  script(type='text/javascript')
+    $('#center-box').show();
+    $('#board').click(window.newCommentHandler);
