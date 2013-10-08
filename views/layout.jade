@@ -30,6 +30,14 @@ head
 body
     #center-box
         #popup
+            #popup-body
+                h1 New comment
+                form(role="form",method="post",action="/comment")
+                    .form-group
+                        label(for="textarea-comment") Insert a comment there
+                        textarea#textarea-comment.form-control(rows="10", placeholder="Comment..." name="comment")
+                    button.btn(type="submit") Submit
+
     .navbar.navbar-inverse.navbar-fixed-top
         .navbar-inner
             .container
@@ -64,7 +72,8 @@ body
     script(type='text/javascript')
         centerbox=$('#center-box');
         centerbox.hide();
-        centerbox.click(function() {centerbox.hide();});
+        // centerbox.click(function() {centerbox.hide();});
+
     block scripts
     script(type='text/javascript')
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -32,8 +32,35 @@ app.use express.logger 'dev'
 app.use express.favicon __dirname + '/public/img/favicon.ico'
 app.use assets()
 app.use express.static __dirname + '/public'
+app.use express.bodyParser()
 
 
+comments = [
+    {
+        name : 'toto'
+        text : 'awesome Website'
+    }
+    {
+        name : 'rocco'
+        text : 'cool'
+    }
+    {
+        name : 'ninja'
+        text : '<3 bro'
+    }
+    {
+        name : 'toto'
+        text : 'awesome Website'
+    }
+    {
+        name : 'rocco'
+        text : 'cool'
+    }
+    {
+        name : 'ninja'
+        text : '<3 bro'
+    }
+]
 
 
 # /*
@@ -49,7 +76,8 @@ routes =
             title : 'Comment',
             subtitle : 'Say something',
             css : css,
-            js : js),
+            js : js,
+            comments : comments),
     about : (req, res) -> res.render('about',
             title : 'About',
             subtitle : 'Who am I?',
@@ -103,7 +131,11 @@ routes =
             posts : posts),
     teaser : (req, res) -> res.render('teaser',{})
 
+routes.comment.post = (req,res) ->
+    console.log req.body.comment
+    res.redirect '/comment'
 
+# HTTP Get request
 app.get '/', routes.home
 app.get '/contact', routes.contact
 app.get '/comment', routes.comment
@@ -116,6 +148,10 @@ app.get '/projects', routes.projects
 app.get '/work', routes.work
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
+
+# HTTP Post request
+app.post '/comment', routes.comment.post
+
 
 app.use express.errorHandler()
 # handle server error middleware
