@@ -72,7 +72,8 @@ body
     script(type='text/javascript')
         centerbox=$('#center-box');
         centerbox.hide();
-        // centerbox.click(function() {centerbox.hide();});
+        centerbox.click(function() {centerbox.hide();});
+        $('#popup').click(function(e) {e.stopPropagation();});
 
     block scripts
     script(type='text/javascript')
