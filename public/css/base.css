@@ -17,7 +17,7 @@
 }
 
 /* Landscape phones and down */
-@media (max-width: 480px) {
+@media (max-width: 767px) {
     .copy {
         padding: 2.5% 10%;
     }
@@ -26,6 +26,10 @@
     }
     .linediv-r {
         border-top: 1px white solid;
+    }
+    #center-box {
+        /* there's body left padding in BS */
+        left : 0px;
     }
 }
 
