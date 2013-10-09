@@ -104,6 +104,9 @@ strong {
     padding-top: 2.5%;
     padding-bottom: 2.5%;
     text-align: justify;
+    white-space: pre-line;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .perspective:after {

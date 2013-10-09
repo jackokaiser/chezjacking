@@ -132,7 +132,10 @@ routes =
     teaser : (req, res) -> res.render('teaser',{})
 
 routes.comment.post = (req,res) ->
-    console.log req.body.comment
+    comments.push {
+        name : 'newUser'
+        text : req.body.comment
+        }
     res.redirect '/comment'
 
 # HTTP Get request
