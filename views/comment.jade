@@ -5,6 +5,11 @@ block link
 
 block contentNoContainer
   .row-fluid
+    #comment-tools.span10.offset1
+      button#add-comment.btn.btn-primary.btn-large
+        i.icon-plus-sign-alt.icon-large
+          |  Add comment!
+  .row-fluid
     #board.span10.offset1
       #col1.span3
       #col2.span3
@@ -21,6 +26,7 @@ block scripts
 
   script(type='text/javascript')
     // click on the board: show popup
-    $('#board').click(function() {
+    $('#add-comment').click(function() {
       $('#center-box').show();
+      $('#textarea-comment').focus();
     });

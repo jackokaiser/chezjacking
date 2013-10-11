@@ -14,6 +14,7 @@
     .linediv-r {
         border-left: 1px white solid;
     }
+
 }
 
 /* Landscape phones and down */
@@ -133,7 +134,7 @@ strong {
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.3),0 1px 0 rgba(255, 255, 255, 0.4) inset;
     color: #fff;
     border: 1px solid #000!important;
-    border-radius: 3px;
+    border-radius: 6px;
     text-decoration: none;
     margin: 0.15%;
 }
@@ -389,9 +390,8 @@ table {
 
 #board {
     background-color : #ffffff;
-    border-radius : 10px;
+    border-radius : 6px;
     padding : 16px;
-    cursor : pointer;
 }
 
 #center-box {
@@ -404,6 +404,10 @@ table {
 
 #popup {
     background-color : #cccccc;
-    margin-top : 4%;
+    margin-top : 8%;
     padding : 20px 20px 20px 20px;
+}
+
+#comment-tools {
+    margin-bottom : 1%;
 }
