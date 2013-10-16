@@ -1,10 +1,9 @@
 !!! 5
 html(lang='en')
-  block link
-    -var selected = 'Home'; //default
+    block link
+        -var selected = 'Home'; //default
 
-  -var menu = { 'Home': '/',  'Projects': '/projects', 'Work': '/work', 'About': '/about', 'Contact': '/contact' };
-  // -var menu = { 'Home': '/',  'Projects': '/projects', 'Work': '/work', 'News' : '/news', 'About': '/about', 'Contact': '/contact' };
+    -var menu = { 'Home': '/',  'Projects': '/projects', 'Work': '/work', 'About': '/about', 'Contact': '/contact' };
 
 head
     meta(charset='utf-8')
@@ -22,6 +21,13 @@ head
         script(src='js/libs/jquery-1.6.4.min.js')
         script(src='js/libs/bootstrap.min.js')
     else
+        link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css' type='text/css')
+        link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css' type='text/css')
+        link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css' type='text/css')
+        script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js' type='text/javascript')
+        script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js' type='text/javascript')
+        link(href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic', rel='stylesheet', type='text/css')
+        link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800', rel='stylesheet', type='text/css')
         script(type='text/javascript')
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-42929181-2']);
