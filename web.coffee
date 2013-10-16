@@ -43,49 +43,58 @@ routes =
     contact : (req, res) -> res.render('contact',
             title : 'Contact',
             subtitle : 'Get in touch',
+            env : app.get('env')
             css : css,
             js : js),
     about : (req, res) -> res.render('about',
             title : 'About',
             subtitle : 'Who am I?',
+            env : app.get('env')
             css : css,
             js : js),
     home : (req, res) -> res.render('home',
             title : 'Jacques KAISER',
             subtitle : 'Welcome to my personal website',
+            env : app.get('env')
             css : css,
             js : js),
     projects : (req, res) -> res.render('projects',
             title : 'Projects',
             subtitle : "There you'll find some of my web projects",
+            env : app.get('env')
             css : css,
             js : js),
     work : (req, res) -> res.render('work',
             title : 'Work experiences',
             subtitle : 'My work experiences along with references',
+            env : app.get('env')
             css : css,
             js : js),
     raytracer : (req, res) -> res.render('raytracer',
             title : '- A basic sphere tracer',
             subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+            env : app.get('env')
             css : css,
             js : js,
             embed : false),
     raytracerEmbed : (req, res) -> res.render('raytracer',
             title : '- A basic sphere tracer',
             subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+            env : app.get('env')
             css : css,
             js : js,
             embed : true),
     raymarcher : (req, res) -> res.render('raymarcher',
             title : '- A basic sphere marcher',
             subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+            env : app.get('env')
             css : css,
             js : js,
             embed : false),
     raymarcherEmbed : (req, res) -> res.render('raymarcher',
             title : '- A basic sphere marcher',
             subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
+            env : app.get('env')
             css : css,
             js : js,
             embed : true),
@@ -93,10 +102,12 @@ routes =
     news : (req, res) -> res.render('news',
             title : 'News',
             subtitle : 'The blog part',
+            env : app.get('env')
             css : css,
             js : js,
             posts : posts),
-    teaser : (req, res) -> res.render('teaser',{})
+    teaser : (req, res) -> res.render('teaser',
+            env : app.get('env'))
 
 
 app.get '/', routes.home

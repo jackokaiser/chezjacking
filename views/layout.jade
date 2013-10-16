@@ -10,24 +10,26 @@ head
     meta(charset='utf-8')
     title Chez Jacking
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap-combined.no-icons.min.css' type='text/css')
-    link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css' type='text/css')
-    link(rel='stylesheet', href='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fsocial-buttons.css' type='text/css')
-    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js' type='text/javascript')
-    script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js' type='text/javascript')
-    link(href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic', rel='stylesheet', type='text/css')
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,300,400,600,700,800', rel='stylesheet', type='text/css')
+    // lib include:
+    // bootstrap
+    // font awesome
+    // jquery
+    // dev environment: we include local files in order to work offline
+    link(rel='stylesheet', href='/css/libs/bootstrap.min.css' type='text/css')
+    link(rel='stylesheet', href='/css/libs/font-awesome/css/font-awesome.min.css' type='text/css')
+    script(src='js/libs/jquery-1.6.4.min.js')
+
     link(href='css/base.css', rel='stylesheet', type='text/css')
     // != css('base')
     script(type='text/javascript')
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-42929181-2']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-42929181-2']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
 body
     .navbar.navbar-inverse.navbar-fixed-top
         .navbar-inner
@@ -51,6 +53,7 @@ body
         .row-fluid.heading
             .span12
                 h1= title
+
         .row-fluid.subheading
             .span12
                 p.lead= subtitle
