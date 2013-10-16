@@ -15,21 +15,24 @@ head
     // font awesome
     // jquery
     // dev environment: we include local files in order to work offline
-    link(rel='stylesheet', href='/css/libs/bootstrap.min.css' type='text/css')
-    link(rel='stylesheet', href='/css/libs/font-awesome/css/font-awesome.min.css' type='text/css')
-    script(src='js/libs/jquery-1.6.4.min.js')
+    if env === 'dev'
+        link(rel='stylesheet', href='/css/libs/bootstrap.min.css' type='text/css')
+        link(rel='stylesheet', href='/css/libs/font-awesome/css/font-awesome.min.css' type='text/css')
+
+        script(src='js/libs/jquery-1.6.4.min.js')
+        script(src='js/libs/bootstrap.min.js')
+    else
+        script(type='text/javascript')
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-42929181-2']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
 
     link(href='css/base.css', rel='stylesheet', type='text/css')
-    // != css('base')
-    script(type='text/javascript')
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-42929181-2']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
 body
     .navbar.navbar-inverse.navbar-fixed-top
         .navbar-inner
