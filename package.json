@@ -8,7 +8,6 @@
     "connect-assets":"*",
     "jade": "*",
     "stylus" : "*",
-    "bootstrap-stylus" : "*",
     "redis":"*"
   },
   "engines": {
