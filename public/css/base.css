@@ -372,3 +372,11 @@ table {
     /* background-color : #e3d7a8; */
     background-color : #91d4c4 ;
 }
+
+#ribbon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 0;
+    z-index: 9999;
+}
