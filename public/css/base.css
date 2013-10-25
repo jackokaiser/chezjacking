@@ -1,4 +1,3 @@
-/* @import url("http://fonts.googleapis.com/css?family=Jacques+Francois"); */
 /* @import url("http://fonts.googleapis.com/css?family=Lato"); */
 /* @import url("http://fonts.googleapis.com/css?family=Ubuntu"); */
 /* @import url("http://fonts.googleapis.com/css?family=Open+Sans"); */
@@ -28,6 +27,10 @@
     .linediv-r {
         border-top: 1px white solid;
     }
+    #ribbon {
+        display : none;
+    }
+
 }
 
 /* All form factors */
@@ -376,7 +379,7 @@ table {
 #ribbon {
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     border: 0;
     z-index: 9999;
 }
