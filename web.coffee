@@ -70,6 +70,12 @@ routes =
             env : app.get('env')
             css : css,
             js : js),
+    ossi : (req, res) -> res.render('ossi',
+            title : 'Australian Trip',
+            subtitle : '2013 - Current',
+            env : app.get('env')
+            css : css,
+            js : js),
     raytracer : (req, res) -> res.render('raytracer',
             title : '- A basic sphere tracer',
             subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
@@ -119,6 +125,7 @@ app.get '/raymarcher', routes.raymarcher
 app.get '/raymarcherEmbed', routes.raymarcherEmbed
 app.get '/projects', routes.projects
 app.get '/work', routes.work
+app.get '/ossi', routes.ossi
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
 

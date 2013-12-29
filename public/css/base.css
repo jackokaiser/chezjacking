@@ -119,6 +119,11 @@ strong {
     padding: 2.5% 0%;
 }
 
+.panorama {
+    width : 100%;
+    height : 200px;
+}
+
 
 .tag-word {
     padding: 0.3em;
@@ -384,4 +389,20 @@ table {
     font-size: 100%;
     line-height: 24px;
     margin: 0 0 3px;
+}
+
+#accordion2 .accordion-group {
+    border : 0px;
+    border-radius : 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    margin-bottom : 10px;
+}
+
+#accordion2 .accordion-inner {
+    border : 0px;
+}
+
+#accordion2 .accordion-heading .accordion-toggle {
+    padding : 0px;
 }
