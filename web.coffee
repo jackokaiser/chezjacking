@@ -70,7 +70,7 @@ routes =
             env : app.get('env')
             css : css,
             js : js),
-    ossi : (req, res) -> res.render('ossi',
+    australia : (req, res) -> res.render('australia',
             title : 'Australian Trip',
             subtitle : '2013 - Current',
             env : app.get('env')
@@ -125,7 +125,7 @@ app.get '/raymarcher', routes.raymarcher
 app.get '/raymarcherEmbed', routes.raymarcherEmbed
 app.get '/projects', routes.projects
 app.get '/work', routes.work
-app.get '/ossi', routes.ossi
+app.get '/australia', routes.australia
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
 

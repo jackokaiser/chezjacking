@@ -22,11 +22,13 @@
     .linediv-r {
         border-top: 1px white solid;
     }
+}
+@media (max-width: 979px) {
     #ribbon {
         display : none;
     }
-
 }
+
 
 /* All form factors */
 
