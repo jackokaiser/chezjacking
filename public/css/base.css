@@ -400,6 +400,7 @@ table {
 }
 
 #accordion2 .accordion-group {
+    width : 100%;
     border : 0px;
     border-radius : 0px;
     -webkit-border-radius: 0px;
