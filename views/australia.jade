@@ -9,6 +9,8 @@ block subheading
       p
       | Here is a diary of my current trip to Australia.
       | It is a monthly newsletter dedicated to my friends, that I decided to upload and open as it may help some people interested into coming down here.
+      p
+      | I added a short video clip to each letter which is a compilation of one-second clips shot every day.
 
 
 
@@ -22,14 +24,16 @@ block content
       #collapseOne.accordion-body.collapse
         .accordion-inner
           .row-fluid.paragraph
-            .span6
-              video(src='img/1SE/My Life_Oct 16 2013 - Oct 26 2013.mp4')
+            .span6.offset3
+              video(width='100%',controls)
+                source(src='img/1SE/My Life_Oct 16 2013 - Oct 26 2013.mp4', type='video/mp4')
+                Your browser does not support the video tag
           .row-fluid.paragraph
             .span12
               :markdown
                 Hey !
 
-                Before I left, a friend suggested to me to send some monthly news of my trip, as it was a nice way to stay in touch.
+                Before I left, a friend suggested me to send some monthly news of my trip, as it was a nice way to stay in touch.
 
                 Thus here I am and there you are :-) <br/>
                 Also, for reusability and global understanding issue, I would rely on Shakespeare's language. Factorisation.
@@ -86,6 +90,10 @@ block content
           img.panorama(src='img/australia/panoNovemberSmall.jpg')
       #collapseTwo.accordion-body.collapse
         .accordion-inner
+          .row-fluid.paragraph
+            .span6.offset3
+              video(width='100%',controls)
+                source(src='img/1SE/My Life_Oct 27 2013 - Nov 21 2013.mp4', type='video/mp4')
           .row-fluid.paragraph
             .span12
               :markdown
@@ -200,6 +208,10 @@ block content
           img.panorama(src='img/australia/panoDecemberSmall.jpg')
       #collapseThree.accordion-body.collapse
         .accordion-inner
+          .row-fluid.paragraph
+            .span6.offset3
+              video(width='100%',controls)
+                source(src='img/1SE/My Life_Nov 22 2013 - Dec 25 2013.mp4', type='video/mp4')
           .row-fluid.paragraph
             .span12
               :markdown
