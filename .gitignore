@@ -3,7 +3,7 @@ node_modules/*
 #*
 npm-debug/log
 
-*.xfc
+*.xcf
 public/img/australia/panoOctober.jpg
 public/img/australia/panoNovember.jpg
 public/img/australia/panoDecember.jpg
