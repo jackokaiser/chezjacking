@@ -33,7 +33,21 @@ app.use express.favicon __dirname + '/public/img/favicon.ico'
 app.use assets()
 app.use express.static __dirname + '/public'
 
+# Object::addProperty = (key,value) ->
+#     console.log 'toto'
+#     return
 
+class TrivialPageScope
+    constructor : () ->
+        @env = app.get 'env'
+    addProperty : (key,value) ->
+        @[key] = value
+        return
+
+
+class StandardPageScope extends TrivialPageScope
+    constructor : (@title, @subtitle) ->
+        super()
 
 
 # /*
@@ -41,79 +55,37 @@ app.use express.static __dirname + '/public'
 #  */
 routes =
     contact : (req, res) -> res.render('contact',
-            title : 'Contact',
-            subtitle : 'Get in touch',
-            env : app.get('env')
-            css : css,
-            js : js),
+            new StandardPageScope 'Contact','Get in touch'),
     about : (req, res) -> res.render('about',
-            title : 'About',
-            subtitle : 'Who am I?',
-            env : app.get('env')
-            css : css,
-            js : js),
+            new StandardPageScope 'About','Who am I?'),
     home : (req, res) -> res.render('home',
-            title : 'Jacques KAISER',
-            subtitle : 'Welcome to my personal website',
-            env : app.get('env')
-            css : css,
-            js : js),
+            new StandardPageScope 'Jacques KAISER','Welcome to my personal website'
+            ),
     projects : (req, res) -> res.render('projects',
-            title : 'Projects',
-            subtitle : "There you'll find some of my web projects",
-            env : app.get('env')
-            css : css,
-            js : js),
+            new StandardPageScope 'Projects', "There you'll find some of my web projects"
+            ),
     work : (req, res) -> res.render('work',
-            title : 'Work experiences',
-            subtitle : 'My work experiences along with references',
-            env : app.get('env')
-            css : css,
-            js : js),
+            new StandardPageScope 'Work experiences', 'My work experiences along with references'
+            ),
     australia : (req, res) -> res.render('australia',
-            title : 'Australian Trip',
-            subtitle : '2013 - Current',
-            env : app.get('env')
-            css : css,
-            js : js),
+            new StandardPageScope 'Australian Trip', '2013 - Current'),
     raytracer : (req, res) -> res.render('raytracer',
-            title : '- A basic sphere tracer',
-            subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
-            env : app.get('env')
-            css : css,
-            js : js,
-            embed : false),
+            (new StandardPageScope '- A basic sphere tracer', 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',false)
+            ),
     raytracerEmbed : (req, res) -> res.render('raytracer',
-            title : '- A basic sphere tracer',
-            subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
-            env : app.get('env')
-            css : css,
-            js : js,
-            embed : true),
+            (new StandardPageScope '- A basic sphere tracer', 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',true)
+            ),
     raymarcher : (req, res) -> res.render('raymarcher',
-            title : '- A basic sphere marcher',
-            subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
-            env : app.get('env')
-            css : css,
-            js : js,
-            embed : false),
+            (new StandardPageScope '- A basic sphere marcher','MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',false)
+            ),
     raymarcherEmbed : (req, res) -> res.render('raymarcher',
-            title : '- A basic sphere marcher',
-            subtitle : 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan',
-            env : app.get('env')
-            css : css,
-            js : js,
-            embed : true),
-
+            (new StandardPageScope '- A basic sphere marcher','MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',true)
+            ),
     news : (req, res) -> res.render('news',
-            title : 'News',
-            subtitle : 'The blog part',
-            env : app.get('env')
-            css : css,
-            js : js,
-            posts : posts),
-    teaser : (req, res) -> res.render('teaser',
-            env : app.get('env'))
+            (new StandardPageScope 'News', 'The blog part').addProperty('posts',posts)
+            ),
+    # todo : error console for teaser
+    teaser : (req, res) -> res.render('teaser')
 
 
 app.get '/', routes.home
