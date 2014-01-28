@@ -33,16 +33,13 @@ app.use express.favicon __dirname + '/public/img/favicon.ico'
 app.use assets()
 app.use express.static __dirname + '/public'
 
-# Object::addProperty = (key,value) ->
-#     console.log 'toto'
-#     return
 
 class TrivialPageScope
     constructor : () ->
         @env = app.get 'env'
     addProperty : (key,value) ->
         @[key] = value
-        return
+        return @
 
 
 class StandardPageScope extends TrivialPageScope
