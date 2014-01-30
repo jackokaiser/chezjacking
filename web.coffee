@@ -66,6 +66,8 @@ routes =
             ),
     australia : (req, res) -> res.render('australia',
             new StandardPageScope 'Australian Trip', '2013 - Current'),
+    australiaMonth : (req, res) -> res.render('australiaDiary/'+req.params.month,
+           new StandardPageScope 'Australian Trip Diary', req.params.month)
     raytracer : (req, res) -> res.render('raytracer',
             (new StandardPageScope '- A basic sphere tracer', 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',false)
             ),
@@ -95,6 +97,7 @@ app.get '/raymarcherEmbed', routes.raymarcherEmbed
 app.get '/projects', routes.projects
 app.get '/work', routes.work
 app.get '/australia', routes.australia
+app.get '/australia/:month', routes.australiaMonth
 # app.get '/news', routes.news
 app.get '/teaser', routes.teaser
 
