@@ -113,8 +113,6 @@ strong {
 
 /* Marketing Copy and Footer */
 .copy {
-    padding-top: 2.5%;
-    padding-bottom: 2.5%;
     text-align: justify;
 }
 
@@ -122,7 +120,7 @@ strong {
     display:none;
 }
 .asset {
-    padding: 2.5% 0%;
+    padding:1em;
 }
 
 .asset-iframe {
