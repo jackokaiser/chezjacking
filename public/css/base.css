@@ -183,7 +183,7 @@ strong {
     float:left;
     /* width:40%; */
     padding:1em;
-    margin:2em 10px 4em;
+    margin:1em 10px 2em;
     background:#fff;
     -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -404,21 +404,4 @@ table {
     font-size: 100%;
     line-height: 24px;
     margin: 0 0 3px;
-}
-
-#accordion2 .accordion-group {
-    width : 100%;
-    border : 0px;
-    border-radius : 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    margin-bottom : 10px;
-}
-
-#accordion2 .accordion-inner {
-    border : 0px;
-}
-
-#accordion2 .accordion-heading .accordion-toggle {
-    padding : 0px;
 }
