@@ -1,9 +1,28 @@
+mixin australiaNav(selected)
+  if selected === 'Australia'
+    li.dropdown.active
+      +australiaDropdown()
+  else
+    li.dropdown
+      +australiaDropdown()
+
+mixin australiaDropdown()
+  a.dropdown-toggle(data-toggle='dropdown',data-target="#",href=menu[Australia]) Australia
+  ul.dropdown-menu(role='menu',aria-labelledby='dLabel')
+    li
+      a toto
+    li
+      a titi
+
+// each val in australiaDropdown
+
 !!! 5
 html(lang='en')
   block link
     -var selected = 'Home'; //default
 
   -var menu = { 'Home': '/',  'Projects': '/projects', 'Work': '/work', 'About': '/about', 'Australia': '/australia', 'Contact': '/contact' };
+  -var australiaDropdown = ['October','November','December'];
 
 head
   meta(charset='utf-8')
@@ -58,7 +77,9 @@ body
         .nav-collapse.collapse
           ul.nav
             each val, key in menu
-              if selected === key
+              if key === 'Australia'
+                +australiaNav(selected)
+              else if selected === key
                 li.active
                   a(href=val, title=key)= key
               else
