@@ -38,7 +38,13 @@ body {
     background-color : #ded1a0;
 }
 
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+}
 
+.navbar .dropdown-menu {
+ margin-top: 0px;
+}
 .banner {
     position: absolute;
     display: block;

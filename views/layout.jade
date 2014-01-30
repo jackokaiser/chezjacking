@@ -7,14 +7,13 @@ mixin australiaNav(selected)
       +australiaDropdown()
 
 mixin australiaDropdown()
-  a.dropdown-toggle(data-toggle='dropdown',data-target="#",href=menu[Australia]) Australia
+  a(href='/australia') Australia
   ul.dropdown-menu(role='menu',aria-labelledby='dLabel')
-    li
-      a toto
-    li
-      a titi
+    each val in australiaDropdown
+      li
+        a(href='/australia/'+val.toLowerCase())= val
 
-// each val in australiaDropdown
+
 
 !!! 5
 html(lang='en')
