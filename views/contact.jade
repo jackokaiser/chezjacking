@@ -13,8 +13,9 @@ block content
         .span3
           p
             strong Jacques KAISER
-          p Developper
-          p jacko.kaiser@gmail.com
+          p Developer
+          i.contact.icon-envelope  jacko.kaiser@gmail.com
+          i.contact.icon-phone  0490 159 046
           p
             a(href='/') www.jacqueskaiser.com
         .row
@@ -35,8 +36,7 @@ block content
           strong Location
       .copy(itemscope itemtype ="http://schema.org/Place" address="Melbourne Australia")
         :markdown
-          From now on, and until the 16th of October 2013, I'm living in Strasbourg, France.
-          Afterward, I'll move to Melbourne, Australia.
+          I'm currently living in Melbourne, Australia
   .span6.drop-shadow.raised
     form
       .controls.controls-row
@@ -52,9 +52,6 @@ block content
         strong GitHub Feed
 
 block scripts
-  script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fjquery.js')
-  script(src='https://d396qusza40orc.cloudfront.net/startup%2Fcode%2Fbootstrap.js')
-  script(src='js/libs/jquery-1.6.4.min.js')
   script(src='js/libs/jquery.rss.js')
   != js('rssFeedParser')
   script

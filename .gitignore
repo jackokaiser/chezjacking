@@ -1,3 +1,9 @@
 node_modules/*
 *~
+#*
 npm-debug/log
+
+*.xcf
+public/img/australia/panoOctober.jpg
+public/img/australia/panoNovember.jpg
+public/img/australia/panoDecember.jpg

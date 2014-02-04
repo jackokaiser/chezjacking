@@ -1,0 +1,26 @@
+extends layout
+
+block link
+  -var selected = 'Australia';
+
+block subheading
+  .row-fluid
+    .span12.drop-shadow.lifted
+      .span6
+        p.bigger
+          | Here is a diary of my current trip to Australia.
+          | It is a monthly newsletter dedicated to my friends, that I decided to upload and open as it may help some people interested into coming down here.
+        p.bigger
+          | Since the beginning of this trip, I shot videos every day, take a one second sample and compile all the samples together. Along with each letter, you'll find the corresponding compiled video, and on this page is the main video which combines all others.
+      .span6
+        video(width='100%',controls)
+          source(src='/img/1SE/My Life_Oct 16 2013 - Feb 03 2014.mp4', type='video/mp4')
+          Your browser does not support the video tag
+
+
+block content
+  each val in australiaDropdown
+    .row-fluid
+      .span12.drop-shadow.raised
+        a(href='/australia/'+val.toLowerCase())
+          img.panorama(width='100%',src='img/australia/pano'+val+'Small.jpg')
