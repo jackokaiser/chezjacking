@@ -63,21 +63,27 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     font-family:  'Ubuntu', 'Lato', Helvetica, Arial, sans-serif;
     text-align: center;
 }
+
+p {
+    font-size: 18px;
+    line-height: 24px;
+}
+p.long {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+p.bigger {
+    font-size: 20px;
+    line-height: 24px;
+}
+
 p.lead {
     padding-top: 1.5%;
     font-size: 24px;
     line-height: 30px;
 }
 
-p.long {
-    font-size: 16px;
-    line-height: 24px;
-}
-
-p {
-    font-size: 18px;
-    line-height: 24px;
-}
 
 .paragraph {
     margin-bottom : 8px;
