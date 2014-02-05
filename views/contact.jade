@@ -4,52 +4,69 @@ block link
   -var selected="Contact"
 
 block content
-  .span6
-    .span5.well.drop-shadow.lifted
+  .row.section1
+    .span6
       .row
-        .span2
-          a.thumbnail(href='/')
-            img(src='img/weddingMe.jpg', alt='')
-        .span3
-          p
-            strong Jacques KAISER
-          p Developer
-          i.contact.icon-envelope  jacko.kaiser@gmail.com
-          i.contact.icon-phone  0490 159 046
-          p
-            a(href='/') www.jacqueskaiser.com
-        .row
-          .span3
-            a.social(href='http://www.linkedin.com/profile/view?id=97265989&locale=en_US')
-              img(src='img/linkedin.png', width='35', alt='linkedin')
-            a.social(href='https://github.com/jackokaiser')
-              img(src='img/github.png', width='35', alt='github')
-            a.social(href='img/cv.pdf')
-              img(src='img/cvIcon.png', width='35', alt='resume')
-            a.social(href='https://plus.google.com/105897447355921804637')
-              img(src='img/googleplus.jpg', width='35', alt='googleplus')
+        .span5.well.drop-shadow.lifted
+          .row
+            .span2
+              a.thumbnail(href='/')
+                img(src='img/weddingMe.jpg', alt='')
+            .span3
+              p
+                strong Jacques KAISER
+              p Developer
+              i.contact.icon-envelope  jacko.kaiser@gmail.com
+              i.contact.icon-phone  0490 159 046
+              p
+                a(href='/') www.jacqueskaiser.com
+            .row
+              .span3
+                a.social(href='http://www.linkedin.com/profile/view?id=97265989&locale=en_US')
+                  img(src='img/linkedin.png', width='35', alt='linkedin')
+                a.social(href='https://github.com/jackokaiser')
+                  img(src='img/github.png', width='35', alt='github')
+                a.social(href='http://jsfiddle.net/user/jackokaiser/fiddles/')
+                  img(src='img/jsfiddle.jpg', width='35', alt='jsfiddle')
+                a.social(href='img/cv.pdf')
+                  img(src='img/cvIcon.png', width='35', alt='resume')
+                a.social(href='https://plus.google.com/105897447355921804637')
+                img(src='img/googleplus.jpg', width='35', alt='googleplus')
 
-  .row-fluid
-    .span5.drop-shadow.lifted
-      .centered
-        p
-          strong Location
-      .copy(itemscope itemtype ="http://schema.org/Place" address="Melbourne Australia")
-        :markdown
-          I'm currently living in Melbourne, Australia
-  .span6.drop-shadow.raised
-    form
-      .controls.controls-row
-        input#name.span3(name='name', type='text', placeholder='Name')
-        input#email.span3(name='email', type='email', placeholder='Email address')
-      .controls
-        textarea#message.span6(name='message', placeholder='Your Message', rows='5')
-      .controls
-        button#contact-submit.btn.btn-primary.input-medium.pull-right(onclick='sendMail(); return false;', type='submit') Send
-  #rss-feeds.span4.drop-shadow.raised
-    .centered
-      p
-        strong GitHub Feed
+      .row
+        .span6.drop-shadow.raised
+          form
+            .controls.controls-row
+              input#name.span3(name='name', type='text', placeholder='Name')
+              input#email.span3(name='email', type='email', placeholder='Email address')
+            .controls
+              textarea#message.span6(name='message', placeholder='Your Message', rows='5')
+            .controls
+              button#contact-submit.btn.btn-primary.input-medium.pull-right(onclick='sendMail(); return false;', type='submit') Send
+
+
+    .span5.offset1
+      .row
+        .span4.drop-shadow.lifted
+          .centered
+            p
+              strong Location
+          .copy(itemscope itemtype ="http://schema.org/Place" address="Melbourne Australia")
+            :markdown
+              I'm currently living in Melbourne, Australia
+      .row
+        #rss-feeds.span5.drop-shadow.raised
+          .centered
+            p
+              strong GitHub Feed
+
+
+
+
+  .row
+    .span12.drop-shadow.raised
+      iframe(frameborder='0', height='500px', width='100%', allowfullscreen='allowFullScreen', webkitallowfullscreen='true', mozallowfullscreen='true', src='/img/cv.pdf')
+
 
 block scripts
   script(src='js/libs/jquery.rss.js')
