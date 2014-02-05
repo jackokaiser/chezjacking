@@ -7,10 +7,10 @@ block subheading
   .row-fluid
     .span12.drop-shadow.lifted
       .span6
-        p.bigger
+        p
           | Here is a diary of my current trip to Australia.
           | It is a monthly newsletter dedicated to my friends, that I decided to upload and open as it may help some people interested into coming down here.
-        p.bigger
+        p
           | Since the beginning of this trip, I shot videos every day, take a one second sample and compile all the samples together. Along with each letter, you'll find the corresponding compiled video, and on this page is the main video which combines all others.
       .span6
         video(width='100%',controls)
@@ -21,6 +21,6 @@ block subheading
 block content
   each val in australiaDropdown
     .row-fluid
-      .span12.drop-shadow.raised
-        a(href='/australia/'+val.toLowerCase())
+      a(href='/australia/'+val.toLowerCase())
+        .span12.drop-shadow.raised
           img.panorama(width='100%',src='img/australia/pano'+val+'Small.jpg')
