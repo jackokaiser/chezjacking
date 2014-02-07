@@ -1,14 +1,22 @@
 !!! 5
 html(lang='en')
 head
-    title Chez Jacking
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0')
-    link(rel='icon', type='image/png', href='img/favicon.ico')
-    link(href='css/nprogress.css', rel='stylesheet', type='text/css')
-    link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet")
-    link(href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet")
-    != css('webgl-player')
+  title Chez Jacking
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0')
+  link(rel='icon', type='image/png', href='img/favicon.ico')
+  link(href='css/nprogress.css', rel='stylesheet', type='text/css')
+
+
+  if env === 'dev'
+    link(rel='stylesheet', href='/css/libs/bootstrap/bootstrap.min.css' type='text/css')
+    link(rel='stylesheet', href='/css/libs/bootstrap/bootstrap-responsive.min.css' type='text/css')
+    link(rel='stylesheet', href='/css/libs/font-awesome/css/font-awesome.min.css' type='text/css')
+
+  else
+    link(href="//netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css", rel="stylesheet")
+    link(href="//netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap-responsive.min.css", rel="stylesheet")
+    link(href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", rel="stylesheet")
     script(type='text/javascript')
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-42929181-2']);
@@ -17,24 +25,32 @@ head
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+    })();
+
+
+  != css('webgl-player')
 
 body
-    #info
-      a(href='/', target='_blank') ChezJacking
+  #info
+    a(href='/', target='_blank') ChezJacking
       |  #{title} <br />
       | #{subtitle}
-    #container(itemscope itemtype="http://schema.org/Code" description="WebGL Raytracer")
-    button#play-icon.btn.btn-large.btn-primary
-      i.icon-play.icon-4x(style="vertical-align:middle;")
-      span#play-text Play !
+  #container(itemscope itemtype="http://schema.org/Code" description="WebGL Raytracer")
+  button#play-icon.btn.btn-large.btn-primary
+    i.icon-play.icon-4x(style="vertical-align:middle;")
+    span#play-text Play !
+
+  // include all these scripts whatever the env
+  script(src='js/libs/three.min.js')
+  script(src='js/libs/stats.min.js')
+  script(src='js/libs/TrackballControls.js')
+  script(src='js/libs/OrbitControls.js')
+  script(src='js/libs/Detector.js')
+
+  if env === 'dev'
+    script(src='/js/libs/jquery-1.10.2.min.js')
+  else
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
-    script(src='js/libs/three.min.js')
-    script(src='js/libs/stats.min.js')
-    script(src='js/libs/TrackballControls.js')
-    script(src='js/libs/OrbitControls.js')
-    script(src='js/libs/Detector.js')
-    script(src='js/libs/nprogress.js')
     script
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -43,8 +59,13 @@ body
       ga('create', 'UA-42929181-2', 'chezjacking.tk');
       ga('send', 'pageview');
 
-    block scripts
-    script
-      // binding
-      $('#play-icon').click(window.go);
-      $('#container').click(window.go);
+
+  // relies on jquery
+  script(src='js/libs/nprogress.js')
+  block scripts
+
+  // inline script
+  script
+    // binding
+    $('#play-icon').click(window.go);
+    $('#container').click(window.go);
