@@ -4,6 +4,8 @@ url = require "url"
 assets = require 'connect-assets'
 redis = require 'redis'
 http = require 'http'
+{routes} = require './routes'
+
 # redisURL = url.parse(process.env.REDISCLOUD_URL);
 # client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 # client.auth(redisURL.auth.split(":")[1]);
@@ -28,6 +30,7 @@ app = express()
 
 app.set('port', process.env.PORT || 8080);
 app.set('env', process.env.NAME || 'prod');
+routes.setEnvironment(app.get('env'))
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
@@ -35,59 +38,6 @@ app.use express.logger 'dev'
 app.use express.favicon __dirname + '/public/img/favicon.ico'
 app.use assets()
 app.use express.static __dirname + '/public'
-
-
-class TrivialPageScope
-    constructor : () ->
-        @env = app.get 'env'
-    addProperty : (key,value) ->
-        @[key] = value
-        return @
-
-
-class StandardPageScope extends TrivialPageScope
-    constructor : (@title, @subtitle) ->
-        super()
-
-
-# /*
-#  * our routes
-#  */
-routes =
-    contact : (req, res) -> res.render('contact',
-            new StandardPageScope 'Contact','Get in touch'),
-    about : (req, res) -> res.render('about',
-            new StandardPageScope 'About','Who am I?'),
-    home : (req, res) -> res.render('home',
-            new StandardPageScope 'Jacques KAISER','Welcome to my personal website'
-            ),
-    projects : (req, res) -> res.render('projects',
-            new StandardPageScope 'Projects', "There you'll find some of my web projects"
-            ),
-    work : (req, res) -> res.render('work',
-            new StandardPageScope 'Work experiences', 'My work experiences along with references'
-            ),
-    australia : (req, res) -> res.render('australia',
-            new StandardPageScope 'Australian Trip', '2013 - Current'),
-    australiaMonth : (req, res) -> res.render('australiaDiary/'+req.params.month,
-           new StandardPageScope 'Australia - '+req.params.month.capitalize(), '')
-    raytracer : (req, res) -> res.render('raytracer',
-            (new StandardPageScope '- A basic sphere tracer', 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',false)
-            ),
-    raytracerEmbed : (req, res) -> res.render('raytracer',
-            (new StandardPageScope '- A basic sphere tracer', 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',true)
-            ),
-    raymarcher : (req, res) -> res.render('raymarcher',
-            (new StandardPageScope '- A basic sphere marcher','MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',false)
-            ),
-    raymarcherEmbed : (req, res) -> res.render('raymarcher',
-            (new StandardPageScope '- A basic sphere marcher','MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',true)
-            ),
-    news : (req, res) -> res.render('news',
-            (new StandardPageScope 'News', 'The blog part').addProperty('posts',posts)
-            ),
-    # todo : error console for teaser
-    teaser : (req, res) -> res.render('teaser')
 
 
 app.get '/', routes.home
