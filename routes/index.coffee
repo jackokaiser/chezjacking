@@ -12,6 +12,17 @@ class StandardPageScope extends TrivialPageScope
     constructor : (@title, @subtitle) ->
         super()
 
+newsletterMonths = [
+  "october",
+  "november",
+  "december",
+  "january",
+  "february",
+  "march",
+  "april",
+  "may"
+  ]
+
 # /*
 #  * our routes
 #  */
@@ -31,8 +42,14 @@ exports.routes =
             ),
     australia : (req, res) -> res.render('australia',
             new StandardPageScope 'Australian Trip', '2013 - Current'),
-    australiaMonth : (req, res) -> res.render('australiaDiary/'+req.params.month,
-           new StandardPageScope 'Australia - '+req.params.month.capitalize(), '')
+    australiaMonth : (req, res, next) ->
+        if req.params.month in newsletterMonths
+            res.render('australiaDiary/'+req.params.month,
+                new StandardPageScope 'Australia - '+req.params.month.capitalize(), '')
+        else
+            console.log('There is no such month')
+            # call the next middleware to handle the 404
+            next()
     raytracer : (req, res) -> res.render('raytracer',
             (new StandardPageScope '- A basic sphere tracer', 'MOVE mouse & press LEFT: rotate, MIDDLE: zoom, RIGHT: pan').addProperty('embed',false)
             ),
