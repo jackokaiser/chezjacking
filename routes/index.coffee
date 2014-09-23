@@ -20,7 +20,10 @@ newsletterMonths = [
   "february",
   "march",
   "april",
-  "may"
+  "may",
+  "june",
+  "july",
+  "august"
   ]
 
 # /*
