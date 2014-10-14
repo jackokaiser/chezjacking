@@ -43,7 +43,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 .navbar .dropdown-menu {
- margin-top: 0px;
+    margin-top: 0px;
 }
 .banner {
     position: absolute;
@@ -408,4 +408,8 @@ table {
     font-size: 100%;
     line-height: 24px;
     margin: 0 0 3px;
+}
+
+strong {
+  font-size: 1em;
 }

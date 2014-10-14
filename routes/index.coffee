@@ -32,7 +32,7 @@ newsletterMonths = [
 #  */
 exports.routes =
     contact : (req, res) -> res.render('contact',
-            new StandardPageScope 'Contact','Get in touch', 'Get in touch with Jacques KAISER, resume, CV, email adress, location'),
+            new StandardPageScope 'Contact','Get in touch', 'Get in touch with Jacques KAISER, resumé, CV, email adress, location'),
     about : (req, res) -> res.render('about',
             new StandardPageScope 'About','Who am I?', 'Know me better, description of myself'),
     home : (req, res) -> res.render('home',
