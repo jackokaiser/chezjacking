@@ -6,17 +6,16 @@ block link
 block subheading
   .row-fluid
     .span12.drop-shadow.lifted
-      .span6
-        p
-          | Here is a diary of my current trip to Australia.
-          | It is a monthly newsletter dedicated to my friends, that I decided to upload and open as it may help some people interested into coming down here.
-        p
-          | Since the beginning of this trip, I shot videos every day, take a one second sample and compile all the samples together. Along with each letter, you'll find the corresponding compiled video, and on this page is the main video which combines all others.
-      .span6
-        video(width='100%',controls)
-          source(src='/img/1SE/My Life_Oct 16 2013 - Sep 03 2014.mp4', type='video/mp4')
-          Your browser does not support the video tag
-
+      .row-fluid
+        .span12
+          p
+            | Here is a diary of my current trip to Australia.
+            | It is a monthly newsletter dedicated to my friends, that I decided to upload and open as it may help some people interested into coming down here.
+          p
+            | Since the beginning of this trip, I shot videos every day, take a one second sample and compile all the samples together. Along with each letter, you'll find the corresponding compiled video, and on this page is the main video which combines all others.
+      .row-fluid
+        .span12
+          iframe(id="ytplayer", type="text/html", height="500px", width="100%", src="http://www.youtube.com/embed/MeCuHHbDes4", frameborder="0")
 
 block content
   each val in australiaDropdown
