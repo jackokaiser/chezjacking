@@ -8,6 +8,39 @@ block content
     .span10.offset1.copy.drop-shadow.raised
       .centered
         h3
+          a.cross-link(href='http://www.inria.fr/en/centre/grenoble') Inria Grenoble Rhône-Alpes
+          |  - 2015
+      .row-fluid
+        a.cross-link(href='http://www.inria.fr/en/centre/grenoble')
+          img(width='100%', src='img/inria.jpg')
+      .row-fluid
+        .copy
+          :markdown
+            This internship is in the framwork of my second year of Master of Science in Informatics at Grenoble (MoSIG).
+            It is a renown, international research master specialized in Graphics, Vision and Robotics.
+
+            During this intern I was a member of the team [CHROMA](http://www.inria.fr/en/teams/chroma "Chroma")
+            (previously known as [e-Motion](https://team.inria.fr/e-motion/en/ "e-motion")) specialized in autonomous robots.
+            Under the supervisation of Agostino Martinelli, I have been investigating a novel Closed-Form method
+            to fuse intertial and visual information.
+
+            We see this method being particularly suited to drones since a popular choice of on board sensors are a camera along with
+            an inertial measurement unit (IMU). It can be used as an initialization to more popular filter-based algorithms, such as
+            the Extended Kalman Filter (EKF), which are able to perform long-term fusion.
+
+            I implemented the closed form in [ethzasl_ptam](https://github.com/jackokaiser/ethzasl_ptam/tree/CF-init "ptam"),
+            a ROS package that deals with pose estimation using visual information.
+            Before, the initialization of PTAM was done through 8-point algorithm over a pair of stereo images,
+            but it could only determine the distance to the features up to a global scale.
+            Now, if we're fed with inertial data, the initialization can be done by the closed form and has the advantage to provide
+            distance to features at the right scale.
+
+          p.note Reference - Agostino Martinelli
+
+  .row-fluid.section1
+    .span10.offset1.copy.drop-shadow.raised
+      .centered
+        h3
           a.cross-link(href='https://shwish.com') Shwish
           |  - 2014
       .row-fluid
